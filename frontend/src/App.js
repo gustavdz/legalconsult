@@ -55,7 +55,7 @@ const App = () => {
             component={HomeScreen}
             exact
           />
-          <Route path="/lpp" component={LandingPageScreen} exact />
+          <Route path="/lp" component={LandingPageScreen} exact />
           <Route path="/" component={HomeScreen} exact />
         </Container>
       </main>
