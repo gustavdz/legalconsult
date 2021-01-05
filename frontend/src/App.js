@@ -18,6 +18,7 @@ import UserEditScreen from "./screens/UserEditScreen";
 import ProductListScreen from "./screens/ProductListScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
 import OrderListScreen from "./screens/OrderListScreen";
+import LandingPageScreen from "./screens/LandingPageScreen";
 const App = () => {
   return (
     <Router>
@@ -54,6 +55,7 @@ const App = () => {
             component={HomeScreen}
             exact
           />
+          <Route path="/lpp" component={LandingPageScreen} exact />
           <Route path="/" component={HomeScreen} exact />
         </Container>
       </main>

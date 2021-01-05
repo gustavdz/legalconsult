@@ -1,7 +1,7 @@
 {
-  "name": "Legal Consult",
+  "name": "LegalConsult",
   "version": "1.0.0",
-  "description": "Consultas legales ",
+  "description": "Consultas legales",
   "main": "server.js",
   "type": "module",
   "scripts": {
