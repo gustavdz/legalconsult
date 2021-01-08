@@ -1,5 +1,5 @@
 main {
-  min-height: 80vh;
+  min-height: calc(100vh - 133px);
 }
 h3 {
   padding: 1rem 0;
