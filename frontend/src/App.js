@@ -26,18 +26,15 @@ const App = () => {
   return (
     <Router>
       <Switch>
+        {/*Rutas para landing page*/}
         <Route path="/" exact>
           <HeaderLandingPage />
-          <main className="py-3">
-            <Container>
-              <Switch>
-                <Route path="/" component={LandingPageScreen} exact />
-              </Switch>
-            </Container>
-          </main>
+          <Switch>
+            <Route path="/" component={LandingPageScreen} exact />
+          </Switch>
           <Footer />
         </Route>
-
+        {/*Rutas para aplicacion*/}
         <Route path="/:path?">
           <Header />
           <main className="py-3">
