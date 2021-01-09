@@ -1,5 +1,5 @@
 import React from "react";
-import { Carousel, Col, Row } from "react-bootstrap";
+import { Carousel, Col, Form, Row } from "react-bootstrap";
 import Meta from "../components/Meta";
 import IntroImg from "../assets/img/intro-img.svg";
 import AboutImg from "../assets/img/about-img.svg";
@@ -14,9 +14,18 @@ import Team1 from "../assets/img/team-1.jpg";
 import Team2 from "../assets/img/team-2.jpg";
 import Team3 from "../assets/img/team-3.jpg";
 import Team4 from "../assets/img/team-4.jpg";
+import Client1 from "../assets/img/clients/client-1.png";
+import Client2 from "../assets/img/clients/client-2.png";
+import Client3 from "../assets/img/clients/client-3.png";
+import Client4 from "../assets/img/clients/client-4.png";
+import Client5 from "../assets/img/clients/client-5.png";
+import Client6 from "../assets/img/clients/client-6.png";
+import Client7 from "../assets/img/clients/client-7.png";
+import Client8 from "../assets/img/clients/client-8.png";
 import { Link as LinkScroll } from "react-scroll";
 import { Link } from "react-router-dom";
 import $ from "jquery";
+import MyMapComponent from "../components/MyMapComponent";
 
 const LandingPageScreen = () => {
   const styles = {
@@ -32,6 +41,10 @@ const LandingPageScreen = () => {
     }
   });
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log("submitted message");
+  };
   return (
     <>
       <Meta />
@@ -679,6 +692,171 @@ const LandingPageScreen = () => {
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        {/* Contenido de clientes */}
+        <section id="clients" className="section-bg">
+          <div className="container">
+            <div className="section-header">
+              <h3>Our CLients</h3>
+              <p>
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                accusantium doloremque dere santome nida.
+              </p>
+            </div>
+
+            <div className="row no-gutters clients-wrap clearfix wow fadeInUp">
+              <div className="col-lg-3 col-md-4 col-xs-6">
+                <div className="client-logo">
+                  <img src={Client1} className="img-fluid" alt="" />
+                </div>
+              </div>
+
+              <div className="col-lg-3 col-md-4 col-xs-6">
+                <div className="client-logo">
+                  <img src={Client2} className="img-fluid" alt="" />
+                </div>
+              </div>
+
+              <div className="col-lg-3 col-md-4 col-xs-6">
+                <div className="client-logo">
+                  <img src={Client3} className="img-fluid" alt="" />
+                </div>
+              </div>
+
+              <div className="col-lg-3 col-md-4 col-xs-6">
+                <div className="client-logo">
+                  <img src={Client4} className="img-fluid" alt="" />
+                </div>
+              </div>
+
+              <div className="col-lg-3 col-md-4 col-xs-6">
+                <div className="client-logo">
+                  <img src={Client5} className="img-fluid" alt="" />
+                </div>
+              </div>
+
+              <div className="col-lg-3 col-md-4 col-xs-6">
+                <div className="client-logo">
+                  <img src={Client6} className="img-fluid" alt="" />
+                </div>
+              </div>
+
+              <div className="col-lg-3 col-md-4 col-xs-6">
+                <div className="client-logo">
+                  <img src={Client7} className="img-fluid" alt="" />
+                </div>
+              </div>
+
+              <div className="col-lg-3 col-md-4 col-xs-6">
+                <div className="client-logo">
+                  <img src={Client8} className="img-fluid" alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        {/* Contenido de contacto */}
+        <section id="contact">
+          <div className="container-fluid">
+            <div className="section-header">
+              <h3>Contact Us</h3>
+            </div>
+
+            <div className="row wow fadeInUp">
+              <div className="col-lg-6">
+                <div className="map mb-4 mb-lg-0">
+                  <MyMapComponent
+                    isMarkerShown
+                    googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+                    // googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places"
+                    loadingElement={<div style={{ height: `100%` }} />}
+                    containerElement={<div style={{ height: `312px` }} />}
+                    mapElement={<div style={{ height: `100%` }} />}
+                  />
+                </div>
+              </div>
+
+              <div className="col-lg-6">
+                <div className="row">
+                  <div className="col-md-5 info">
+                    <i className="ion-ios-location-outline"></i>
+                    <p>A108 Adam Street, NY 535022</p>
+                  </div>
+                  <div className="col-md-4 info">
+                    <i className="ion-ios-email-outline"></i>
+                    <p>info@example.com</p>
+                  </div>
+                  <div className="col-md-3 info">
+                    <i className="ion-ios-telephone-outline"></i>
+                    <p>+1 5589 55488 55</p>
+                  </div>
+                </div>
+
+                <div className="form">
+                  <div id="sendmessage">
+                    Your message has been sent. Thank you!
+                  </div>
+                  <div id="errormessage"></div>
+                  <Form onSubmit={submitHandler} className="contactForm">
+                    <div className="form-row">
+                      <div className="form-group col-lg-6">
+                        <input
+                          type="text"
+                          name="name"
+                          className="form-control"
+                          id="name"
+                          placeholder="Your Name"
+                          data-rule="minlen:4"
+                          data-msg="Please enter at least 4 chars"
+                        />
+                        <div className="validation"></div>
+                      </div>
+                      <div className="form-group col-lg-6">
+                        <input
+                          type="email"
+                          className="form-control"
+                          name="email"
+                          id="email"
+                          placeholder="Your Email"
+                          data-rule="email"
+                          data-msg="Please enter a valid email"
+                        />
+                        <div className="validation"></div>
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="subject"
+                        id="subject"
+                        placeholder="Subject"
+                        data-rule="minlen:4"
+                        data-msg="Please enter at least 8 chars of subject"
+                      />
+                      <div className="validation"></div>
+                    </div>
+                    <div className="form-group">
+                      <textarea
+                        className="form-control"
+                        name="message"
+                        rows="5"
+                        data-rule="required"
+                        data-msg="Please write something for us"
+                        placeholder="Message"
+                      ></textarea>
+                      <div className="validation"></div>
+                    </div>
+                    <div className="text-center">
+                      <button type="submit" title="Send Message">
+                        Send Message
+                      </button>
+                    </div>
+                  </Form>
                 </div>
               </div>
             </div>
