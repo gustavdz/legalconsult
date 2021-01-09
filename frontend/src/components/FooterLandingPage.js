@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-const Footer = () => {
+const FooterLandingPage = () => {
   const year = new Date();
   const heartStyle = { color: "#be1931" };
   return (
@@ -23,7 +23,6 @@ const Footer = () => {
             >
               Deckasoft
             </a>
-            .
           </Col>
         </Row>
       </Container>
@@ -31,4 +30,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default FooterLandingPage;

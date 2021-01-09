@@ -21,6 +21,7 @@ import ProductEditScreen from "./screens/ProductEditScreen";
 import OrderListScreen from "./screens/OrderListScreen";
 import LandingPageScreen from "./screens/LandingPageScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
+import FooterLandingPage from "./components/FooterLandingPage";
 
 const App = () => {
   return (
@@ -32,7 +33,7 @@ const App = () => {
           <Switch>
             <Route path="/" component={LandingPageScreen} exact />
           </Switch>
-          <Footer />
+          <FooterLandingPage />
         </Route>
         {/*Rutas para aplicacion*/}
         <Route path="/:path?">
