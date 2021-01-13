@@ -16,21 +16,16 @@ const Header = () => {
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
         <Container>
-          <LinkContainer to="/">
+          <LinkContainer to="/home">
             <Navbar.Brand>LegalConsult</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Route render={({ history }) => <SearchBox history={history} />} />
             <Nav className="ml-auto">
-              <LinkContainer to="/">
-                <Nav.Link>
-                  <i className="fas fa-home"></i> Home
-                </Nav.Link>
-              </LinkContainer>
               <LinkContainer to="/home">
                 <Nav.Link>
-                  <i className="fas fa-store"></i> Store
+                  <i className="fas fa-tachometer-alt"></i> Dashboard
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to="/cart">

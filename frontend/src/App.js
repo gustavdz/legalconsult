@@ -22,6 +22,7 @@ import OrderListScreen from "./screens/OrderListScreen";
 import LandingPageScreen from "./screens/LandingPageScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
 import FooterLandingPage from "./components/FooterLandingPage";
+import QuestionScreen from "./screens/QuestionScreen";
 
 const App = () => {
   return (
@@ -51,6 +52,7 @@ const App = () => {
                 <Route path="/placeorder" component={PlaceOrderScreen} />
                 <Route path="/order/:id" component={OrderScreen} />
                 <Route path="/product/:id" component={ProductScreen} />
+                <Route path="/question/:id" component={QuestionScreen} />
                 <Route path="/cart/:id?" component={CartScreen} />
                 <Route
                   path="/admin/productlist"

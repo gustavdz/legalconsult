@@ -2,26 +2,33 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Product from "../components/Product";
+import Question from "../components/Question";
 import Message from "../components/Message";
 import Paginate from "../components/Paginate";
 import Loader from "../components/Loader";
 import Meta from "../components/Meta";
-import { listProducts } from "../actions/productActions";
+import { listQuestions } from "../actions/questionActions";
 import ProductCarousel from "../components/ProductCarousel";
 
-const HomeScreen = ({ match }) => {
+const HomeScreen = ({ match, history }) => {
   const keyword = match.params.keyword;
   const pageNumber = match.params.pageNumber || 1;
 
   const dispatch = useDispatch();
 
-  const productList = useSelector((state) => state.productList);
-  const { loading, error, products, page, pages } = productList;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const questionList = useSelector((state) => state.questionList);
+  const { loading, error, questions, page, pages } = questionList;
 
   useEffect(() => {
-    dispatch(listProducts(keyword, pageNumber));
-  }, [dispatch, keyword, pageNumber]);
+    if (!userInfo) {
+      history.push("/login");
+    } else {
+      dispatch(listQuestions(keyword, pageNumber));
+    }
+  }, [dispatch, keyword, pageNumber, history, userInfo]);
 
   return (
     <>
@@ -33,7 +40,7 @@ const HomeScreen = ({ match }) => {
           Go Back
         </Link>
       )}
-      <h1>Latest Products</h1>
+      <h1>Lastest Questions</h1>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -41,9 +48,9 @@ const HomeScreen = ({ match }) => {
       ) : (
         <>
           <Row>
-            {products.map((product) => (
-              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                <Product product={product} />
+            {questions.map((question) => (
+              <Col key={question._id} sm={12}>
+                <Question question={question} />
               </Col>
             ))}
           </Row>
