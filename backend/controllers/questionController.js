@@ -58,6 +58,7 @@ const getQuestions = asyncHandler(async (req, res) => {
   const count = await Question.countDocuments({ ...keyword });
   const questions = await Question.find({ ...keyword })
     .populate("user")
+    .populate("takenBy", ["-password", "-isAdmin", "-isCustomer"])
     .limit(pageSize)
     .skip(pageSize * (page - 1));
   res.json({
@@ -73,7 +74,8 @@ const getQuestions = asyncHandler(async (req, res) => {
 const getQuestionById = asyncHandler(async (req, res) => {
   const question = await Question.findById(req.params.id)
     .populate("user", "-password")
-    .populate("messages.user", "-password");
+    .populate("messages.user", "-password")
+    .populate("takenBy", ["-password", "-isAdmin", "-isCustomer"]);
 
   if (question) {
     res.json(question);
@@ -158,6 +160,26 @@ const createQuestionMessage = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Take a question
+// @route   POST /api/questions/:id/take
+// @access  Private/Admin/Lawyer
+const takeQuestion = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+
+  const question = await Question.findById(req.params.id);
+
+  if (question) {
+    question.isTaken = true;
+    question.takenBy = userId;
+
+    await question.save();
+    res.status(201).json({ message: "Question taken" });
+  } else {
+    res.status(404);
+    throw new Error("Question not found");
+  }
+});
+
 export {
   getQuestionById,
   getQuestions,
@@ -166,4 +188,5 @@ export {
   updateQuestion,
   createQuestionMessage,
   getFreeQuestions,
+  takeQuestion,
 };

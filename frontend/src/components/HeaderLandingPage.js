@@ -40,7 +40,7 @@ const HeaderLandingPage = () => {
       >
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>LegalConsult</Navbar.Brand>
+            <Navbar.Brand>LexiConsultas</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

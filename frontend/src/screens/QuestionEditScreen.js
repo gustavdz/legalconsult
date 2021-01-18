@@ -63,7 +63,6 @@ const QuestionEditScreen = ({ match, history }) => {
       } else {
         setTitle(question.title);
         setDetail(question.detail);
-
         setIsPaid(false);
         setIsTaken(false);
         setIsClosed(false);

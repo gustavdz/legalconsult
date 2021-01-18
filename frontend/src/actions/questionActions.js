@@ -221,3 +221,39 @@ export const listAllQuestions = (keyword = "", pageNumber = "") => async (
     });
   }
 };
+
+export const takeQuestion = (question) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: QUESTION_UPDATE_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.patch(
+      `/api/questions/${question._id}/take`,
+      question,
+      config
+    );
+
+    dispatch({
+      type: QUESTION_UPDATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: QUESTION_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

@@ -8,12 +8,14 @@ import {
   createQuestion,
   createQuestionMessage,
   getFreeQuestions,
+  takeQuestion,
 } from "../controllers/questionController.js";
-import { protect, admin } from "../middleware/authMiddleware.js";
+import { protect, admin, lawyer } from "../middleware/authMiddleware.js";
 
 router.route("/all").get(getQuestions);
 router.route("/").get(getFreeQuestions).post(protect, admin, createQuestion);
 router.route("/:id/message").post(protect, createQuestionMessage);
+router.route("/:id/take").patch(protect, admin, lawyer, takeQuestion);
 router
   .route("/:id")
   .get(getQuestionById)

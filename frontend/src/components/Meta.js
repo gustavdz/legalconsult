@@ -12,7 +12,7 @@ const Meta = ({ title, keywords, description }) => {
 };
 
 Meta.defaultProps = {
-  title: "Welcome to LegalConsulting",
+  title: "Welcome to LexiConsultas",
   keywords: "Legal, Consultas, Leyes, Abogados, Asesoría, Sistema",
   description: "Consultas legales",
 };

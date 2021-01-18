@@ -50,7 +50,7 @@ const HomeScreen = ({ match, history }) => {
           <Row>
             {questions.map((question) => (
               <Col key={question._id} sm={12}>
-                <Question question={question} />
+                <Question question={question} userInfo={userInfo} />
               </Col>
             ))}
           </Row>

@@ -1,9 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Badge, Card } from "react-bootstrap";
+import { Badge, Button, Card, Col, Row } from "react-bootstrap";
 import DayJS from "react-dayjs";
+import { takeQuestion } from "../actions/questionActions";
+import { useDispatch, useSelector } from "react-redux";
+import { QUESTION_UPDATE_RESET } from "../constants/questionConstants";
 
-const Question = ({ question }) => {
+const Question = ({ question, userInfo }) => {
+  const dispatch = useDispatch();
+
+  const questionUpdate = useSelector((state) => state.questionUpdate);
+  const {
+    // loading: loadingUpdate,
+    // error: errorUpdate,
+    success: successUpdate,
+  } = questionUpdate;
+
+  useEffect(() => {
+    if (successUpdate) {
+      dispatch({ type: QUESTION_UPDATE_RESET });
+    }
+  }, [dispatch, successUpdate]);
+
+  const handleTakeCase = (questionId) => {
+    //console.log({ questionId, userId });
+    dispatch(
+      takeQuestion({
+        _id: questionId,
+      })
+    );
+  };
+
   return (
     <Card className="my-3 p-3 rounded">
       <Card.Body>
@@ -20,22 +47,35 @@ const Question = ({ question }) => {
           {<DayJS format="YYYY-MM-DD HH:mm:ss">{question.createdAt}</DayJS>}
         </Card.Text>
         <hr />
-        <Card.Text as="p">
-          {" "}
-          Areas:{" "}
-          {question.areas.length > 0
-            ? question.areas.map((area) => {
-                return (
-                  <Badge
-                    variant="info"
-                    key={area}
-                    style={{ marginRight: "10px" }}
-                  >
-                    {area}
-                  </Badge>
-                );
-              })
-            : "N/A"}
+        <Card.Text as="div">
+          <Row>
+            <Col xs={12} md={10}>
+              Areas:{" "}
+              {question.areas.length > 0
+                ? question.areas.map((area) => {
+                    return (
+                      <Badge
+                        variant="info"
+                        key={area}
+                        style={{ marginRight: "10px" }}
+                      >
+                        {area}
+                      </Badge>
+                    );
+                  })
+                : "N/A"}
+            </Col>
+            <Col xs={12} md={2}>
+              {(userInfo.isLawyer || userInfo.isAdmin) && (
+                <Button
+                  variant="success"
+                  onClick={() => handleTakeCase(question._id)}
+                >
+                  Take the case
+                </Button>
+              )}
+            </Col>
+          </Row>
         </Card.Text>
       </Card.Body>
     </Card>

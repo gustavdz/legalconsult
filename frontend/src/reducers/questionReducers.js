@@ -50,6 +50,7 @@ export const questionDetailsReducer = (
       messages: [],
       areas: [],
       user: {},
+      takenBy: {},
     },
   },
   action
@@ -142,6 +143,21 @@ export const questionAllReducer = (state = { questions: [] }, action) => {
       };
     case QUESTION_ALL_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const questionTakeReducer = (state = { question: {} }, action) => {
+  switch (action.type) {
+    case QUESTION_UPDATE_REQUEST:
+      return { loading: true };
+    case QUESTION_UPDATE_SUCCESS:
+      return { loading: false, success: true, question: action.payload };
+    case QUESTION_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case QUESTION_UPDATE_RESET:
+      return { question: {}, error: false };
     default:
       return state;
   }

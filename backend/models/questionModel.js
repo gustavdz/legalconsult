@@ -65,6 +65,11 @@ const questionSchema = mongoose.Schema(
       required: true,
       default: false,
     },
+    takenBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: false,
+      ref: "User",
+    },
   },
   {
     timestamps: true,
