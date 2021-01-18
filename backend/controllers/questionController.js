@@ -7,7 +7,7 @@ import User from "../models/userModel.js";
 // @route   GET /api/questions
 // @access  Public
 const getFreeQuestions = asyncHandler(async (req, res) => {
-  const pageSize = 10;
+  const pageSize = 5;
   const page = Number(req.query.pageNumber) || 1;
   const keyword = req.query.keyword
     ? {
@@ -45,7 +45,7 @@ const getFreeQuestions = asyncHandler(async (req, res) => {
 // @route   GET /api/questions/all
 // @access  Public
 const getQuestions = asyncHandler(async (req, res) => {
-  const pageSize = 10;
+  const pageSize = 5;
   const page = Number(req.query.pageNumber) || 1;
   const keyword = req.query.keyword
     ? {
@@ -114,14 +114,14 @@ const createQuestion = asyncHandler(async (req, res) => {
 // @route   PUT /api/questions/:id
 // @access  Private/Admin
 const updateQuestion = asyncHandler(async (req, res) => {
-  const { title, detail, area, isTaken, isPaid, isClosed } = req.body;
+  const { title, detail, areas, isTaken, isPaid, isClosed } = req.body;
 
   const question = await Question.findById(req.params.id);
 
   if (question) {
     question.title = title;
     question.detail = detail;
-    question.areas = area;
+    question.areas = areas;
     question.isTaken = isTaken;
     question.isPaid = isPaid;
     question.isClosed = isClosed;

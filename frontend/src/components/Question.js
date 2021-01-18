@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Badge, Card } from "react-bootstrap";
-import Moment from "react-moment";
-import "moment-timezone";
+import DayJS from "react-dayjs";
 
 const Question = ({ question }) => {
   return (
@@ -18,7 +17,7 @@ const Question = ({ question }) => {
           {" "}
           by <strong>{question.user.name}</strong>
           {" | "}
-          {<Moment format="YYYY-MM-DD HH:mm:ss">{question.createdAt}</Moment>}
+          {<DayJS format="YYYY-MM-DD HH:mm:ss">{question.createdAt}</DayJS>}
         </Card.Text>
         <hr />
         <Card.Text as="p">

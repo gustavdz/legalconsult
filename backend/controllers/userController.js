@@ -15,6 +15,8 @@ const authUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      isLawyer: user.isLawyer,
+      isCustomer: user.isCustomer,
       token: generateToken(user._id),
     });
   } else {
@@ -27,17 +29,32 @@ const authUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, role } = req.body;
   const userExist = await User.findOne({ email });
+  let isLawyer = false;
+  let isCustomer = false;
+  let isAdmin = true;
 
   if (userExist) {
     res.status(400);
     throw new Error("User already exists");
   }
+  if (role === "Customer") {
+    isLawyer = false;
+    isCustomer = true;
+    isAdmin = false;
+  } else {
+    isLawyer = true;
+    isCustomer = false;
+    isAdmin = false;
+  }
   const user = await User.create({
     name,
     email,
     password,
+    isLawyer,
+    isCustomer,
+    isAdmin,
   });
   if (user) {
     res.status(201).json({
@@ -45,6 +62,8 @@ const registerUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      isLawyer: user.isLawyer,
+      isCustomer: user.isCustomer,
       token: generateToken(user._id),
     });
   } else {
@@ -65,6 +84,8 @@ const getUserProfile = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      isLawyer: user.isLawyer,
+      isCustomer: user.isCustomer,
     });
   } else {
     res.status(404);
@@ -90,6 +111,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
+      isLawyer: updatedUser.isLawyer,
+      isCustomer: updatedUser.isCustomer,
       token: generateToken(updatedUser._id),
     });
   } else {
@@ -145,6 +168,8 @@ const updateUser = asyncHandler(async (req, res) => {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
     user.isAdmin = req.body.isAdmin;
+    user.isLawyer = req.body.isLawyer;
+    user.isCustomer = req.body.isCustomer;
 
     const updatedUser = await user.save();
     res.json({
@@ -152,6 +177,8 @@ const updateUser = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
+      isLawyer: updatedUser.isLawyer,
+      isCustomer: updatedUser.isCustomer,
     });
   } else {
     res.status(404);

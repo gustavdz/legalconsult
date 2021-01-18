@@ -12,7 +12,7 @@ const Meta = ({ title, keywords, description }) => {
 };
 
 Meta.defaultProps = {
-  title: "Welcomme to LegalConsulting",
+  title: "Welcome to LegalConsulting",
   keywords: "Legal, Consultas, Leyes, Abogados, Asesoría, Sistema",
   description: "Consultas legales",
 };

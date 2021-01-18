@@ -11,8 +11,7 @@ import {
   createQuestionMessage,
 } from "../actions/questionActions";
 import { QUESTION_CREATE_MESSAGE_RESET } from "../constants/questionConstants";
-import Moment from "react-moment";
-import "moment-timezone";
+import DayJS from "react-dayjs";
 
 const QuestionScreen = ({ history, match }) => {
   const [message, setMessage] = useState("");
@@ -21,6 +20,7 @@ const QuestionScreen = ({ history, match }) => {
 
   const questionDetails = useSelector((state) => state.questionDetails);
   const { loading, error, question } = questionDetails;
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
@@ -34,12 +34,16 @@ const QuestionScreen = ({ history, match }) => {
   } = questionMessageCreate;
 
   useEffect(() => {
-    if (successQuestionMessage) {
-      setMessage("");
+    if (!userInfo) {
+      history.push("/login");
+    } else {
+      if (successQuestionMessage) {
+        setMessage("");
+      }
+      dispatch(listQuestionDetails(match.params.id));
+      dispatch({ type: QUESTION_CREATE_MESSAGE_RESET });
     }
-    dispatch(listQuestionDetails(match.params.id));
-    dispatch({ type: QUESTION_CREATE_MESSAGE_RESET });
-  }, [dispatch, match, successQuestionMessage]);
+  }, [dispatch, match, successQuestionMessage, userInfo, history]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -70,7 +74,7 @@ const QuestionScreen = ({ history, match }) => {
                 </ListGroup.Item>
                 <ListGroup.Item>
                   Areas:{" "}
-                  {question.areas.length > 0
+                  {question && question.areas.length > 0
                     ? question.areas.map((area) => {
                         return (
                           <Badge
@@ -89,9 +93,9 @@ const QuestionScreen = ({ history, match }) => {
                     by <strong>{question.user.name}</strong>
                     {" | "}
                     {
-                      <Moment format="YYYY-MM-DD HH:mm:ss">
+                      <DayJS format="YYYY-MM-DD HH:mm:ss">
                         {question.createdAt}
-                      </Moment>
+                      </DayJS>
                     }
                   </p>
                 </ListGroup.Item>
@@ -109,9 +113,9 @@ const QuestionScreen = ({ history, match }) => {
                       by <strong>{message.user.name}</strong>
                       {" | "}
                       {
-                        <Moment format="YYYY-MM-DD HH:mm:ss">
+                        <DayJS format="YYYY-MM-DD HH:mm:ss">
                           {message.createdAt}
-                        </Moment>
+                        </DayJS>
                       }
                     </p>
                   </ListGroup.Item>

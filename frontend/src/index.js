@@ -5,6 +5,7 @@ import store from "./store";
 import "./bootstrap.min.css";
 import "./index.css";
 import "./landing.css";
+import "animate.css/animate.compat.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 

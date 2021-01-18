@@ -26,6 +26,7 @@ import { Link as LinkScroll } from "react-scroll";
 import { Link } from "react-router-dom";
 import $ from "jquery";
 import MyMapComponent from "../components/MyMapComponent";
+import ScrollAnimation from "react-animate-on-scroll";
 
 const LandingPageScreen = () => {
   const styles = {
@@ -45,6 +46,7 @@ const LandingPageScreen = () => {
     e.preventDefault();
     console.log("submitted message");
   };
+
   return (
     <>
       <Meta />
@@ -52,33 +54,38 @@ const LandingPageScreen = () => {
       <section id="intro" className="clearfix">
         <div className="container">
           <div className="intro-img">
-            <img src={IntroImg} alt="" className="img-fluid" />
+            <ScrollAnimation className="fadeInRight">
+              <img src={IntroImg} alt="" className="img-fluid" />
+            </ScrollAnimation>
           </div>
 
           <div className="intro-info">
-            <h2>
-              We provide
-              <br />
-              <span>solutions</span>
-              <br />
-              for your business!
-            </h2>
-            <div>
-              <Link to="/login" className="btn-get-started scrollto">
-                Get Started
-              </Link>
+            <ScrollAnimation className="fadeInLeft">
+              <h2>
+                We provide
+                <br />
+                <span>solutions</span>
+                <br />
+                for your business!
+              </h2>
 
-              <LinkScroll
-                to="services"
-                style={styles}
-                spy={true}
-                smooth={true}
-                duration={500}
-                className="btn-services scrollto"
-              >
-                Our Services
-              </LinkScroll>
-            </div>
+              <div>
+                <Link to="/login" className="btn-get-started scrollto">
+                  Get Started
+                </Link>
+
+                <LinkScroll
+                  to="services"
+                  style={styles}
+                  spy={true}
+                  smooth={true}
+                  duration={500}
+                  className="btn-services scrollto"
+                >
+                  Our Services
+                </LinkScroll>
+              </div>
+            </ScrollAnimation>
           </div>
         </div>
       </section>
@@ -103,96 +110,114 @@ const LandingPageScreen = () => {
                   laboris nisi ut aliquip ex ea commodo consequat.
                 </p>
 
-                <div className="icon-box wow fadeInUp">
-                  <div className="icon">
-                    <i className="fa fa-shopping-bag"></i>
+                <ScrollAnimation animateIn="fadeInUp">
+                  <div className="icon-box">
+                    <div className="icon">
+                      <i className="fa fa-shopping-bag"></i>
+                    </div>
+                    <h4 className="title">Eiusmod Tempor</h4>
+                    <p className="description">
+                      Et harum quidem rerum facilis est et expedita distinctio.
+                      Nam libero tempore, cum soluta nobis est eligendi
+                    </p>
                   </div>
-                  <h4 className="title">Eiusmod Tempor</h4>
-                  <p className="description">
-                    Et harum quidem rerum facilis est et expedita distinctio.
-                    Nam libero tempore, cum soluta nobis est eligendi
-                  </p>
-                </div>
+                </ScrollAnimation>
 
-                <div className="icon-box wow fadeInUp" data-wow-delay="0.2s">
-                  <div className="icon">
-                    <i className="far fa-image"></i>
+                <ScrollAnimation animateIn="fadeInUp" delay={200}>
+                  <div className="icon-box" data-wow-delay="0.2s">
+                    <div className="icon">
+                      <i className="far fa-image"></i>
+                    </div>
+                    <h4 className="title">Magni Dolores</h4>
+                    <p className="description">
+                      Excepteur sint occaecat cupidatat non proident, sunt in
+                      culpa qui officia deserunt mollit anim id est laborum
+                    </p>
                   </div>
-                  <h4 className="title">Magni Dolores</h4>
-                  <p className="description">
-                    Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum
-                  </p>
-                </div>
+                </ScrollAnimation>
 
-                <div className="icon-box wow fadeInUp" data-wow-delay="0.4s">
-                  <div className="icon">
-                    <i className="fas fa-chart-bar"></i>
+                <ScrollAnimation animateIn="fadeInUp" delay={400}>
+                  <div className="icon-box" data-wow-delay="0.4s">
+                    <div className="icon">
+                      <i className="fas fa-chart-bar"></i>
+                    </div>
+                    <h4 className="title">Dolor Sitema</h4>
+                    <p className="description">
+                      Minim veniam, quis nostrud exercitation ullamco laboris
+                      nisi ut aliquip ex ea commodo consequat tarad limino ata
+                    </p>
                   </div>
-                  <h4 className="title">Dolor Sitema</h4>
-                  <p className="description">
-                    Minim veniam, quis nostrud exercitation ullamco laboris nisi
-                    ut aliquip ex ea commodo consequat tarad limino ata
-                  </p>
-                </div>
+                </ScrollAnimation>
               </div>
 
-              <div className="col-lg-6 background order-lg-2 order-1 wow fadeInUp">
-                <img src={AboutImg} className="img-fluid" alt="" />
+              <div className="col-lg-6 background order-lg-2 order-1">
+                <ScrollAnimation animateIn="fadeInRight">
+                  <img src={AboutImg} className="img-fluid" alt="" />
+                </ScrollAnimation>
               </div>
             </div>
 
             <div className="row about-extra">
-              <div className="col-lg-6 wow fadeInUp">
-                <img src={AboutExtra1} className="img-fluid" alt="" />
+              <div className="col-lg-6">
+                <ScrollAnimation animateIn="fadeInLeft">
+                  <img src={AboutExtra1} className="img-fluid" alt="" />
+                </ScrollAnimation>
               </div>
-              <div className="col-lg-6 wow fadeInUp pt-5 pt-lg-0">
-                <h4>
-                  Voluptatem dignissimos provident quasi corporis voluptates sit
-                  assumenda.
-                </h4>
-                <p>
-                  Ipsum in aspernatur ut possimus sint. Quia omnis est occaecati
-                  possimus ea. Quas molestiae perspiciatis occaecati qui rerum.
-                  Deleniti quod porro sed quisquam saepe. Numquam mollitia
-                  recusandae non ad at et a.
-                </p>
-                <p>
-                  Ad vitae recusandae odit possimus. Quaerat cum ipsum corrupti.
-                  Odit qui asperiores ea corporis deserunt veritatis quidem
-                  expedita perferendis. Qui rerum eligendi ex doloribus quia
-                  sit. Porro rerum eum eum.
-                </p>
+
+              <div className="col-lg-6 pt-5 pt-lg-0">
+                <ScrollAnimation animateIn="fadeInUp" delay={0}>
+                  <h4>
+                    Voluptatem dignissimos provident quasi corporis voluptates
+                    sit assumenda.
+                  </h4>
+                  <p>
+                    Ipsum in aspernatur ut possimus sint. Quia omnis est
+                    occaecati possimus ea. Quas molestiae perspiciatis occaecati
+                    qui rerum. Deleniti quod porro sed quisquam saepe. Numquam
+                    mollitia recusandae non ad at et a.
+                  </p>
+                  <p>
+                    Ad vitae recusandae odit possimus. Quaerat cum ipsum
+                    corrupti. Odit qui asperiores ea corporis deserunt veritatis
+                    quidem expedita perferendis. Qui rerum eligendi ex doloribus
+                    quia sit. Porro rerum eum eum.
+                  </p>
+                </ScrollAnimation>
               </div>
             </div>
 
             <div className="row about-extra">
-              <div className="col-lg-6 wow fadeInUp order-1 order-lg-2">
-                <img src={AboutExtra2} className="img-fluid" alt="" />
+              <div className="col-lg-6 order-1 order-lg-2">
+                <ScrollAnimation animateIn="fadeInRight">
+                  <img src={AboutExtra2} className="img-fluid" alt="" />
+                </ScrollAnimation>
               </div>
 
-              <div className="col-lg-6 wow fadeInUp pt-4 pt-lg-0 order-2 order-lg-1">
-                <h4>
-                  Neque saepe temporibus repellat ea ipsum et. Id vel et quia
-                  tempora facere reprehenderit.
-                </h4>
-                <p>
-                  Delectus alias ut incidunt delectus nam placeat in
-                  consequatur. Sed cupiditate quia ea quis. Voluptas nemo qui
-                  aut distinctio. Cumque fugit earum est quam officiis numquam.
-                  Ducimus corporis autem at blanditiis beatae incidunt sunt.
-                </p>
-                <p>
-                  Voluptas saepe natus quidem blanditiis. Non sunt impedit
-                  voluptas mollitia beatae. Qui esse molestias. Laudantium
-                  libero nisi vitae debitis. Dolorem cupiditate est perferendis
-                  iusto.
-                </p>
-                <p>
-                  Eum quia in. Magni quas ipsum a. Quis ex voluptatem inventore
-                  sint quia modi. Numquam est aut fuga mollitia exercitationem
-                  nam accusantium provident quia.
-                </p>
+              <div className="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1">
+                <ScrollAnimation animateIn="fadeInLeft">
+                  <h4>
+                    Neque saepe temporibus repellat ea ipsum et. Id vel et quia
+                    tempora facere reprehenderit.
+                  </h4>
+                  <p>
+                    Delectus alias ut incidunt delectus nam placeat in
+                    consequatur. Sed cupiditate quia ea quis. Voluptas nemo qui
+                    aut distinctio. Cumque fugit earum est quam officiis
+                    numquam. Ducimus corporis autem at blanditiis beatae
+                    incidunt sunt.
+                  </p>
+                  <p>
+                    Voluptas saepe natus quidem blanditiis. Non sunt impedit
+                    voluptas mollitia beatae. Qui esse molestias. Laudantium
+                    libero nisi vitae debitis. Dolorem cupiditate est
+                    perferendis iusto.
+                  </p>
+                  <p>
+                    Eum quia in. Magni quas ipsum a. Quis ex voluptatem
+                    inventore sint quia modi. Numquam est aut fuga mollitia
+                    exercitationem nam accusantium provident quia.
+                  </p>
+                </ScrollAnimation>
               </div>
             </div>
           </div>
@@ -209,197 +234,221 @@ const LandingPageScreen = () => {
             </header>
 
             <div className="row">
-              <div
-                className="col-md-6 col-lg-5 offset-lg-1 wow bounceInUp"
-                data-wow-duration="1.4s"
-              >
-                <div className="box">
-                  <div className="icon">
-                    <i
-                      className="ion-ios-analytics-outline"
-                      style={{ color: "#ff689b" }}
-                    ></i>
+              <div className="col-md-6 col-lg-5 offset-lg-1">
+                <ScrollAnimation animateIn="bounceInUp" duration={1.4}>
+                  <div className="box">
+                    <div className="icon">
+                      <i
+                        className="ion-ios-analytics-outline"
+                        style={{ color: "#ff689b" }}
+                      ></i>
+                    </div>
+                    <h4 className="title">Lorem Ipsum</h4>
+                    <p className="description">
+                      Voluptatum deleniti atque corrupti quos dolores et quas
+                      molestias excepturi sint occaecati cupiditate non
+                      provident
+                    </p>
                   </div>
-                  <h4 className="title">Lorem Ipsum</h4>
-                  <p className="description">
-                    Voluptatum deleniti atque corrupti quos dolores et quas
-                    molestias excepturi sint occaecati cupiditate non provident
-                  </p>
-                </div>
+                </ScrollAnimation>
               </div>
-              <div
-                className="col-md-6 col-lg-5 wow bounceInUp"
-                data-wow-duration="1.4s"
-              >
-                <div className="box">
-                  <div className="icon">
-                    <i
-                      className="ion-ios-bookmarks-outline"
-                      style={{ color: "#e9bf06" }}
-                    ></i>
+              <div className="col-md-6 col-lg-5">
+                <ScrollAnimation animateIn="bounceInUp" duration={1.4}>
+                  <div className="box">
+                    <div className="icon">
+                      <i
+                        className="ion-ios-bookmarks-outline"
+                        style={{ color: "#e9bf06" }}
+                      ></i>
+                    </div>
+                    <h4 className="title">Dolor Sitema</h4>
+                    <p className="description">
+                      Minim veniam, quis nostrud exercitation ullamco laboris
+                      nisi ut aliquip ex ea commodo consequat tarad limino ata
+                    </p>
                   </div>
-                  <h4 className="title">Dolor Sitema</h4>
-                  <p className="description">
-                    Minim veniam, quis nostrud exercitation ullamco laboris nisi
-                    ut aliquip ex ea commodo consequat tarad limino ata
-                  </p>
-                </div>
-              </div>
-
-              <div
-                className="col-md-6 col-lg-5 offset-lg-1 wow bounceInUp"
-                data-wow-delay="0.1s"
-                data-wow-duration="1.4s"
-              >
-                <div className="box">
-                  <div className="icon">
-                    <i
-                      className="ion-ios-paper-outline"
-                      style={{ color: "#3fcdc7" }}
-                    ></i>
-                  </div>
-                  <h4 className="title">Sed ut perspiciatis</h4>
-                  <p className="description">
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur
-                  </p>
-                </div>
-              </div>
-              <div
-                className="col-md-6 col-lg-5 wow bounceInUp"
-                data-wow-delay="0.1s"
-                data-wow-duration="1.4s"
-              >
-                <div className="box">
-                  <div className="icon">
-                    <i
-                      className="ion-ios-speedometer-outline"
-                      style={{ color: "#41cf2e" }}
-                    ></i>
-                  </div>
-                  <h4 className="title">Magni Dolores</h4>
-                  <p className="description">
-                    Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum
-                  </p>
-                </div>
+                </ScrollAnimation>
               </div>
 
-              <div
-                className="col-md-6 col-lg-5 offset-lg-1 wow bounceInUp"
-                data-wow-delay="0.2s"
-                data-wow-duration="1.4s"
-              >
-                <div className="box">
-                  <div className="icon">
-                    <i
-                      className="ion-ios-world-outline"
-                      style={{ color: "#d6ff22" }}
-                    ></i>
+              <div className="col-md-6 col-lg-5 offset-lg-1">
+                <ScrollAnimation
+                  animateIn="bounceInUp"
+                  duration={1.4}
+                  delay={100}
+                >
+                  <div className="box">
+                    <div className="icon">
+                      <i
+                        className="ion-ios-paper-outline"
+                        style={{ color: "#3fcdc7" }}
+                      ></i>
+                    </div>
+                    <h4 className="title">Sed ut perspiciatis</h4>
+                    <p className="description">
+                      Duis aute irure dolor in reprehenderit in voluptate velit
+                      esse cillum dolore eu fugiat nulla pariatur
+                    </p>
                   </div>
-                  <h4 className="title">Nemo Enim</h4>
-                  <p className="description">
-                    At vero eos et accusamus et iusto odio dignissimos ducimus
-                    qui blanditiis praesentium voluptatum deleniti atque
-                  </p>
-                </div>
+                </ScrollAnimation>
               </div>
-              <div
-                className="col-md-6 col-lg-5 wow bounceInUp"
-                data-wow-delay="0.2s"
-                data-wow-duration="1.4s"
-              >
-                <div className="box">
-                  <div className="icon">
-                    <i
-                      className="ion-ios-clock-outline"
-                      style={{ color: "#4680ff" }}
-                    ></i>
+              <div className="col-md-6 col-lg-5">
+                <ScrollAnimation
+                  animateIn="bounceInUp"
+                  duration={1.4}
+                  delay={100}
+                >
+                  <div className="box">
+                    <div className="icon">
+                      <i
+                        className="ion-ios-speedometer-outline"
+                        style={{ color: "#41cf2e" }}
+                      ></i>
+                    </div>
+                    <h4 className="title">Magni Dolores</h4>
+                    <p className="description">
+                      Excepteur sint occaecat cupidatat non proident, sunt in
+                      culpa qui officia deserunt mollit anim id est laborum
+                    </p>
                   </div>
-                  <h4 className="title">Eiusmod Tempor</h4>
-                  <p className="description">
-                    Et harum quidem rerum facilis est et expedita distinctio.
-                    Nam libero tempore, cum soluta nobis est eligendi
-                  </p>
-                </div>
+                </ScrollAnimation>
+              </div>
+
+              <div className="col-md-6 col-lg-5 offset-lg-1">
+                <ScrollAnimation
+                  animateIn="bounceInUp"
+                  duration={1.4}
+                  delay={200}
+                >
+                  <div className="box">
+                    <div className="icon">
+                      <i
+                        className="ion-ios-world-outline"
+                        style={{ color: "#d6ff22" }}
+                      ></i>
+                    </div>
+                    <h4 className="title">Nemo Enim</h4>
+                    <p className="description">
+                      At vero eos et accusamus et iusto odio dignissimos ducimus
+                      qui blanditiis praesentium voluptatum deleniti atque
+                    </p>
+                  </div>
+                </ScrollAnimation>
+              </div>
+              <div className="col-md-6 col-lg-5">
+                <ScrollAnimation
+                  animateIn="bounceInUp"
+                  duration={1.4}
+                  delay={200}
+                >
+                  <div className="box">
+                    <div className="icon">
+                      <i
+                        className="ion-ios-clock-outline"
+                        style={{ color: "#4680ff" }}
+                      ></i>
+                    </div>
+                    <h4 className="title">Eiusmod Tempor</h4>
+                    <p className="description">
+                      Et harum quidem rerum facilis est et expedita distinctio.
+                      Nam libero tempore, cum soluta nobis est eligendi
+                    </p>
+                  </div>
+                </ScrollAnimation>
               </div>
             </div>
           </div>
         </section>
         {/* Contenido de why-us */}
-        <section id="why-us" className="wow fadeIn">
-          <div className="container">
-            <header className="section-header">
-              <h3>Why choose us?</h3>
-              <p>
-                Laudem latine persequeris id sed, ex fabulas delectus quo. No
-                vel partiendo abhorreant vituperatoribus.
-              </p>
-            </header>
+        <section id="why-us">
+          <ScrollAnimation animateIn="fadeIn">
+            <div className="container">
+              <header className="section-header">
+                <h3>Why choose us?</h3>
+                <p>
+                  Laudem latine persequeris id sed, ex fabulas delectus quo. No
+                  vel partiendo abhorreant vituperatoribus.
+                </p>
+              </header>
+              <div className="row row-eq-height justify-content-center">
+                <div className="col-lg-4 mb-4">
+                  <ScrollAnimation
+                    animateIn="bounceInUp"
+                    style={{ height: "100%" }}
+                  >
+                    <div className="card  ">
+                      <i className="far fa-gem"></i>
+                      <div className="card-body">
+                        <h5 className="card-title">Corporis dolorem</h5>
+                        <p className="card-text">
+                          Deleniti optio et nisi dolorem debitis. Aliquam nobis
+                          est temporibus sunt ab inventore officiis aut
+                          voluptatibus.
+                        </p>
+                      </div>
+                    </div>
+                  </ScrollAnimation>
+                </div>
 
-            <div className="row row-eq-height justify-content-center">
-              <div className="col-lg-4 mb-4">
-                <div className="card wow bounceInUp">
-                  <i className="far fa-gem"></i>
-                  <div className="card-body">
-                    <h5 className="card-title">Corporis dolorem</h5>
-                    <p className="card-text">
-                      Deleniti optio et nisi dolorem debitis. Aliquam nobis est
-                      temporibus sunt ab inventore officiis aut voluptatibus.
-                    </p>
-                  </div>
+                <div className="col-lg-4 mb-4">
+                  <ScrollAnimation
+                    animateIn="bounceInUp"
+                    style={{ height: "100%" }}
+                  >
+                    <div className="card">
+                      <i className="fas fa-language"></i>
+                      <div className="card-body">
+                        <h5 className="card-title">Voluptates dolores</h5>
+                        <p className="card-text">
+                          Voluptates nihil et quis omnis et eaque omnis sint
+                          aut. Ducimus dolorum aspernatur.
+                        </p>
+                      </div>
+                    </div>
+                  </ScrollAnimation>
+                </div>
+
+                <div className="col-lg-4 mb-4">
+                  <ScrollAnimation
+                    animateIn="bounceInUp"
+                    style={{ height: "100%" }}
+                  >
+                    <div className="card">
+                      <i className="far fa-object-group"></i>
+                      <div className="card-body">
+                        <h5 className="card-title">Eum ut aspernatur</h5>
+                        <p className="card-text">
+                          Autem quod nesciunt eos ea aut amet laboriosam ab. Eos
+                          quis porro in non nemo ex.
+                        </p>
+                      </div>
+                    </div>
+                  </ScrollAnimation>
                 </div>
               </div>
 
-              <div className="col-lg-4 mb-4">
-                <div className="card wow bounceInUp">
-                  <i className="fas fa-language"></i>
-                  <div className="card-body">
-                    <h5 className="card-title">Voluptates dolores</h5>
-                    <p className="card-text">
-                      Voluptates nihil et quis omnis et eaque omnis sint aut.
-                      Ducimus dolorum aspernatur.
-                    </p>
-                  </div>
+              <div className="row counters">
+                <div className="col-lg-3 col-6 text-center">
+                  <span data-toggle="counter-up">274</span>
+                  <p>Clients</p>
                 </div>
-              </div>
 
-              <div className="col-lg-4 mb-4">
-                <div className="card wow bounceInUp">
-                  <i className="far fa-object-group"></i>
-                  <div className="card-body">
-                    <h5 className="card-title">Eum ut aspernatur</h5>
-                    <p className="card-text">
-                      Autem quod nesciunt eos ea aut amet laboriosam ab. Eos
-                      quis porro in non nemo ex.
-                    </p>
-                  </div>
+                <div className="col-lg-3 col-6 text-center">
+                  <span data-toggle="counter-up">421</span>
+                  <p>Projects</p>
+                </div>
+
+                <div className="col-lg-3 col-6 text-center">
+                  <span data-toggle="counter-up">1,364</span>
+                  <p>Hours Of Support</p>
+                </div>
+
+                <div className="col-lg-3 col-6 text-center">
+                  <span data-toggle="counter-up">18</span>
+                  <p>Hard Workers</p>
                 </div>
               </div>
             </div>
-
-            <div className="row counters">
-              <div className="col-lg-3 col-6 text-center">
-                <span data-toggle="counter-up">274</span>
-                <p>Clients</p>
-              </div>
-
-              <div className="col-lg-3 col-6 text-center">
-                <span data-toggle="counter-up">421</span>
-                <p>Projects</p>
-              </div>
-
-              <div className="col-lg-3 col-6 text-center">
-                <span data-toggle="counter-up">1,364</span>
-                <p>Hours Of Support</p>
-              </div>
-
-              <div className="col-lg-3 col-6 text-center">
-                <span data-toggle="counter-up">18</span>
-                <p>Hard Workers</p>
-              </div>
-            </div>
-          </div>
+          </ScrollAnimation>
         </section>
         {/* Contenido de testimonials */}
         <section id="testimonials" className="section-bg">

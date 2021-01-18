@@ -17,9 +17,9 @@ import {
   QUESTION_CREATE_MESSAGE_REQUEST,
   QUESTION_CREATE_MESSAGE_SUCCESS,
   QUESTION_CREATE_MESSAGE_FAIL,
-  QUESTION_TOP_SUCCESS,
-  QUESTION_TOP_FAIL,
-  QUESTION_TOP_REQUEST,
+  QUESTION_ALL_SUCCESS,
+  QUESTION_ALL_FAIL,
+  QUESTION_ALL_REQUEST,
 } from "../constants/questionConstants";
 import axios from "axios";
 
@@ -66,7 +66,7 @@ export const listQuestionDetails = (id) => async (dispatch) => {
   }
 };
 
-export const deletequestion = (id) => async (dispatch, getState) => {
+export const deleteQuestion = (id) => async (dispatch, getState) => {
   try {
     dispatch({
       type: QUESTION_DELETE_REQUEST,
@@ -97,7 +97,7 @@ export const deletequestion = (id) => async (dispatch, getState) => {
   }
 };
 
-export const createquestion = () => async (dispatch, getState) => {
+export const createQuestion = () => async (dispatch, getState) => {
   try {
     dispatch({
       type: QUESTION_CREATE_REQUEST,
@@ -129,7 +129,7 @@ export const createquestion = () => async (dispatch, getState) => {
   }
 };
 
-export const updatequestion = (question) => async (dispatch, getState) => {
+export const updateQuestion = (question) => async (dispatch, getState) => {
   try {
     dispatch({
       type: QUESTION_UPDATE_REQUEST,
@@ -199,17 +199,21 @@ export const createQuestionMessage = (questionId, message) => async (
   }
 };
 
-export const listTopquestions = () => async (dispatch) => {
+export const listAllQuestions = (keyword = "", pageNumber = "") => async (
+  dispatch
+) => {
   try {
-    dispatch({ type: QUESTION_TOP_REQUEST });
-    const { data } = await axios.get(`/api/questions/top`);
+    dispatch({ type: QUESTION_ALL_REQUEST });
+    const { data } = await axios.get(
+      `/api/questions/all?keyword=${keyword}&pageNumber=${pageNumber}`
+    );
     dispatch({
-      type: QUESTION_TOP_SUCCESS,
+      type: QUESTION_ALL_SUCCESS,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: QUESTION_TOP_FAIL,
+      type: QUESTION_ALL_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

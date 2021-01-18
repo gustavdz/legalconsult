@@ -28,15 +28,18 @@ const Header = () => {
                   <i className="fas fa-tachometer-alt"></i> Dashboard
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/cart">
+              {/* <LinkContainer to="/cart">
                 <Nav.Link>
                   <i className="fas fa-shopping-cart"></i> Cart
                 </Nav.Link>
-              </LinkContainer>
+              </LinkContainer> */}
               {userInfo && userInfo.isAdmin && (
                 <NavDropdown title="Admin" id="adminmenu">
                   <LinkContainer to="/admin/userlist">
                     <NavDropdown.Item>Users</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/admin/questionlist">
+                    <NavDropdown.Item>Questions</NavDropdown.Item>
                   </LinkContainer>
                   <LinkContainer to="/admin/productlist">
                     <NavDropdown.Item>Products</NavDropdown.Item>

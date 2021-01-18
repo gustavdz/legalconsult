@@ -13,6 +13,8 @@ const UserEditScreen = ({ match, history }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isLawyer, setIsLawyer] = useState(false);
+  const [isCustomer, setIsCustomer] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -37,13 +39,17 @@ const UserEditScreen = ({ match, history }) => {
         setName(user.name);
         setEmail(user.email);
         setIsAdmin(user.isAdmin);
+        setIsLawyer(user.isLawyer);
+        setIsCustomer(user.isCustomer);
       }
     }
   }, [dispatch, userId, user, successUpdate, history]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(updateUser({ _id: userId, name, email, isAdmin }));
+    dispatch(
+      updateUser({ _id: userId, name, email, isAdmin, isLawyer, isCustomer })
+    );
   };
 
   return (
@@ -92,6 +98,28 @@ const UserEditScreen = ({ match, history }) => {
                 checked={isAdmin}
                 onChange={(e) => {
                   setIsAdmin(e.target.checked);
+                }}
+              ></Form.Check>
+            </Form.Group>
+
+            <Form.Group controlId="isLawyer">
+              <Form.Check
+                type="checkbox"
+                label="Is Lawyer?"
+                checked={isLawyer}
+                onChange={(e) => {
+                  setIsLawyer(e.target.checked);
+                }}
+              ></Form.Check>
+            </Form.Group>
+
+            <Form.Group controlId="isCustomer">
+              <Form.Check
+                type="checkbox"
+                label="Is Customer?"
+                checked={isCustomer}
+                onChange={(e) => {
+                  setIsCustomer(e.target.checked);
                 }}
               ></Form.Check>
             </Form.Group>

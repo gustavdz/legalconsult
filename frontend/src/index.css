@@ -25,3 +25,41 @@ h1 {
   background-color: #eeeeee;
   padding: 20px;
 }
+
+.css-yk16xz-control {
+  width: 100% !important;
+  min-height: calc(1.5em + 1.5rem) !important;
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  color: #55595c !important;
+  background-color: #f7f7f9 !important;
+  background-clip: padding-box !important;
+  border: 0 solid #ced4da !important;
+  border-radius: 0 !important;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+}
+
+.css-1pahdxg-control {
+  width: 100% !important;
+  min-height: calc(1.5em + 1.5rem) !important;
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  color: #55595c !important;
+  background-color: #f7f7f9 !important;
+  background-clip: padding-box !important;
+  border: 0 solid #ced4da !important;
+  border-radius: 0 !important;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+  box-shadow: 0 #ced4da !important;
+
+  border-color: #ced4da !important;
+
+  box-shadow: 0 0 0 3px #c6c6c6 !important;
+  box-sizing: border-box;
+}
+
+.css-1n7v3ny-option {
+  background-color: rgba(0, 0, 0, 0.075) !important;
+}

@@ -20,9 +20,10 @@ import {
   QUESTION_CREATE_MESSAGE_SUCCESS,
   QUESTION_CREATE_MESSAGE_FAIL,
   QUESTION_CREATE_MESSAGE_RESET,
-  QUESTION_TOP_REQUEST,
-  QUESTION_TOP_SUCCESS,
-  QUESTION_TOP_FAIL,
+  QUESTION_ALL_REQUEST,
+  QUESTION_ALL_SUCCESS,
+  QUESTION_ALL_FAIL,
+  QUESTION_DETAILS_RESET,
 } from "../constants/questionConstants";
 
 export const questionListReducer = (state = { questions: [] }, action) => {
@@ -63,6 +64,8 @@ export const questionDetailsReducer = (
       };
     case QUESTION_DETAILS_FAIL:
       return { loading: false, error: action.payload };
+    case QUESTION_DETAILS_RESET:
+      return { question: {} };
     default:
       return state;
   }
@@ -105,7 +108,7 @@ export const questionUpdateReducer = (state = { question: {} }, action) => {
     case QUESTION_UPDATE_FAIL:
       return { loading: false, error: action.payload };
     case QUESTION_UPDATE_RESET:
-      return { question: {} };
+      return { question: {}, error: false };
     default:
       return state;
   }
@@ -126,13 +129,18 @@ export const questionMessageCreateReducer = (state = {}, action) => {
   }
 };
 
-export const questionTopRatedReducer = (state = { questions: [] }, action) => {
+export const questionAllReducer = (state = { questions: [] }, action) => {
   switch (action.type) {
-    case QUESTION_TOP_REQUEST:
+    case QUESTION_ALL_REQUEST:
       return { loading: true, questions: [] };
-    case QUESTION_TOP_SUCCESS:
-      return { loading: false, questions: action.payload };
-    case QUESTION_TOP_FAIL:
+    case QUESTION_ALL_SUCCESS:
+      return {
+        loading: false,
+        questions: action.payload.questions,
+        pages: action.payload.pages,
+        page: action.payload.page,
+      };
+    case QUESTION_ALL_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

@@ -36,7 +36,7 @@ import {
   questionCreateReducer,
   questionUpdateReducer,
   questionMessageCreateReducer,
-  questionTopRatedReducer,
+  questionAllReducer,
 } from "./reducers/questionReducers";
 
 const reducer = combineReducers({
@@ -67,7 +67,7 @@ const reducer = combineReducers({
   questionCreate: questionCreateReducer,
   questionUpdate: questionUpdateReducer,
   questionMessageCreate: questionMessageCreateReducer,
-  questionTopRated: questionTopRatedReducer,
+  questionAll: questionAllReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")

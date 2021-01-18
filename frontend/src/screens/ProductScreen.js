@@ -41,13 +41,17 @@ const ProductScreen = ({ history, match }) => {
   } = productReviewCreate;
 
   useEffect(() => {
-    if (successProductReview) {
-      setRating(0);
-      setComment("");
+    if (!userInfo) {
+      history.push("/login");
+    } else {
+      if (successProductReview) {
+        setRating(0);
+        setComment("");
+      }
+      dispatch(listProductDetails(match.params.id));
+      dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
     }
-    dispatch(listProductDetails(match.params.id));
-    dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
-  }, [dispatch, match, successProductReview]);
+  }, [dispatch, match, successProductReview, history, userInfo]);
 
   const addToCartHandler = () => {
     history.push(`/cart/${match.params.id}?qty=${qty}`);

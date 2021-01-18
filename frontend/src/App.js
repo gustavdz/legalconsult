@@ -23,6 +23,8 @@ import LandingPageScreen from "./screens/LandingPageScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
 import FooterLandingPage from "./components/FooterLandingPage";
 import QuestionScreen from "./screens/QuestionScreen";
+import QuestionListScreen from "./screens/QuestionListScreen";
+import QuestionEditScreen from "./screens/QuestionEditScreen";
 
 const App = () => {
   return (
@@ -42,17 +44,25 @@ const App = () => {
           <main className="py-3">
             <Container>
               <Switch>
-                <Route path="/admin/userlist" component={UserListScreen} />
-                <Route path="/admin/user/:id/edit" component={UserEditScreen} />
                 <Route path="/login" component={LoginScreen} />
                 <Route path="/register" component={RegisterScreen} />
                 <Route path="/profile" component={ProfileScreen} />
+                <Route path="/home" component={HomeScreen} exact />
+                <Route path="/question/:id" component={QuestionScreen} />
+                <Route path="/search/:keyword" component={HomeScreen} exact />
+                <Route path="/page/:pageNumber" component={HomeScreen} exact />
+                <Route
+                  path="/search/:keyword/page/:pageNumber"
+                  component={HomeScreen}
+                  exact
+                />
+                <Route path="/admin/userlist" component={UserListScreen} />
+                <Route path="/admin/user/:id/edit" component={UserEditScreen} />
                 <Route path="/shipping" component={ShippingScreen} />
                 <Route path="/payment" component={PaymentScreen} />
                 <Route path="/placeorder" component={PlaceOrderScreen} />
                 <Route path="/order/:id" component={OrderScreen} />
                 <Route path="/product/:id" component={ProductScreen} />
-                <Route path="/question/:id" component={QuestionScreen} />
                 <Route path="/cart/:id?" component={CartScreen} />
                 <Route
                   path="/admin/productlist"
@@ -68,15 +78,21 @@ const App = () => {
                   path="/admin/product/:id/edit"
                   component={ProductEditScreen}
                 />
-                <Route path="/admin/orderlist" component={OrderListScreen} />
-                <Route path="/search/:keyword" component={HomeScreen} exact />
-                <Route path="/page/:pageNumber" component={HomeScreen} exact />
                 <Route
-                  path="/search/:keyword/page/:pageNumber"
-                  component={HomeScreen}
+                  path="/admin/questionlist"
+                  component={QuestionListScreen}
                   exact
                 />
-                <Route path="/home" component={HomeScreen} exact />
+                <Route
+                  path="/admin/questionlist/:pageNumber"
+                  component={QuestionListScreen}
+                  exact
+                />
+                <Route
+                  path="/admin/question/:id/edit"
+                  component={QuestionEditScreen}
+                />
+                <Route path="/admin/orderlist" component={OrderListScreen} />
                 <Route component={NotFoundScreen} />
               </Switch>
             </Container>

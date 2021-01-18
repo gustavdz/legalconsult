@@ -8,10 +8,12 @@ import FormContainer from "../components/FormContainer";
 import { register } from "../actions/userActions";
 
 const RegisterScreen = ({ location, history }) => {
+  const [role, setRole] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
   const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
@@ -20,6 +22,8 @@ const RegisterScreen = ({ location, history }) => {
   const { loading, error, userInfo } = userRegister;
 
   const redirect = location.search ? location.search.split("=")[1] : "/home";
+
+  const roles = ["Customer", "Lawyer"];
 
   useEffect(() => {
     if (userInfo) {
@@ -32,7 +36,7 @@ const RegisterScreen = ({ location, history }) => {
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
     } else {
-      dispatch(register(name, email, password));
+      dispatch(register(name, email, password, role));
     }
   };
 
@@ -43,6 +47,20 @@ const RegisterScreen = ({ location, history }) => {
       {error && <Message variant="danger">{error}</Message>}
       {loading && <Loader />}
       <Form onSubmit={submitHandler}>
+        <Form.Group controlId="role">
+          <Form.Label>Role</Form.Label>
+          <Form.Control
+            as="select"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+          >
+            {[...roles].map((x) => (
+              <option key={x} value={x}>
+                {x}
+              </option>
+            ))}
+          </Form.Control>
+        </Form.Group>
         <Form.Group controlId="name">
           <Form.Label>Name</Form.Label>
           <Form.Control
