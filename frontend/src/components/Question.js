@@ -19,11 +19,10 @@ const Question = ({ question, userInfo, setReload }) => {
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: QUESTION_UPDATE_RESET });
+      const reloadQuestions = () => setReload(true);
       reloadQuestions();
     }
-  }, [dispatch, successUpdate, reloadQuestions]);
-
-  const reloadQuestions = () => setReload(true);
+  }, [dispatch, successUpdate, setReload]);
 
   const handleTakeCase = (questionId) => {
     //console.log({ questionId, userId });
