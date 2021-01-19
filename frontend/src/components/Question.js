@@ -6,7 +6,7 @@ import { takeQuestion } from "../actions/questionActions";
 import { useDispatch, useSelector } from "react-redux";
 import { QUESTION_UPDATE_RESET } from "../constants/questionConstants";
 
-const Question = ({ question, userInfo }) => {
+const Question = ({ question, userInfo, setReload }) => {
   const dispatch = useDispatch();
 
   const questionUpdate = useSelector((state) => state.questionUpdate);
@@ -19,8 +19,11 @@ const Question = ({ question, userInfo }) => {
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: QUESTION_UPDATE_RESET });
+      reloadQuestions();
     }
-  }, [dispatch, successUpdate]);
+  }, [dispatch, successUpdate, reloadQuestions]);
+
+  const reloadQuestions = () => setReload(true);
 
   const handleTakeCase = (questionId) => {
     //console.log({ questionId, userId });
@@ -66,7 +69,7 @@ const Question = ({ question, userInfo }) => {
                 : "N/A"}
             </Col>
             <Col xs={12} md={2}>
-              {(userInfo.isLawyer || userInfo.isAdmin) && (
+              {userInfo && (userInfo.isLawyer || userInfo.isAdmin) && (
                 <Button
                   variant="success"
                   onClick={() => handleTakeCase(question._id)}

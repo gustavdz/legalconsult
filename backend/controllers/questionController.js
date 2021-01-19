@@ -17,7 +17,7 @@ const getFreeQuestions = asyncHandler(async (req, res) => {
         },
       }
     : {};
-  const count = await Question.countDocuments({ ...keyword });
+  const count = await Question.countDocuments({ ...keyword, isTaken: false });
   let questions = {};
   if (count === 0) {
     questions = await Question.find({

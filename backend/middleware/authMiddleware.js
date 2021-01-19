@@ -44,6 +44,15 @@ const lawyer = (req, res, next) => {
   }
 };
 
+const adminLawyer = (req, res, next) => {
+  if (req.user && (req.user.isAdmin || req.user.isLawyer)) {
+    next();
+  } else {
+    res.status(401);
+    throw new Error("Not authorized as an admin");
+  }
+};
+
 const customer = (req, res, next) => {
   if (req.user && req.user.isCustomer) {
     next();
@@ -53,4 +62,4 @@ const customer = (req, res, next) => {
   }
 };
 
-export { protect, admin, lawyer, customer };
+export { protect, admin, lawyer, customer, adminLawyer };

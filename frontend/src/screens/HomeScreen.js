@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -8,11 +8,11 @@ import Paginate from "../components/Paginate";
 import Loader from "../components/Loader";
 import Meta from "../components/Meta";
 import { listQuestions } from "../actions/questionActions";
-import ProductCarousel from "../components/ProductCarousel";
 
 const HomeScreen = ({ match, history }) => {
   const keyword = match.params.keyword;
   const pageNumber = match.params.pageNumber || 1;
+  const [reload, setReload] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -27,16 +27,15 @@ const HomeScreen = ({ match, history }) => {
       history.push("/login");
     } else {
       dispatch(listQuestions(keyword, pageNumber));
+      setReload(false);
     }
-  }, [dispatch, keyword, pageNumber, history, userInfo]);
+  }, [dispatch, keyword, pageNumber, history, userInfo, reload]);
 
   return (
     <>
       <Meta />
-      {!keyword ? (
-        <ProductCarousel />
-      ) : (
-        <Link to="/" className="btn btn-light">
+      {keyword && (
+        <Link to="/home" className="btn btn-light">
           Go Back
         </Link>
       )}
@@ -50,7 +49,11 @@ const HomeScreen = ({ match, history }) => {
           <Row>
             {questions.map((question) => (
               <Col key={question._id} sm={12}>
-                <Question question={question} userInfo={userInfo} />
+                <Question
+                  question={question}
+                  userInfo={userInfo}
+                  setReload={setReload}
+                />
               </Col>
             ))}
           </Row>
