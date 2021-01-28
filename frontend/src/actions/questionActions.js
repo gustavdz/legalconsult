@@ -20,6 +20,12 @@ import {
   QUESTION_ALL_SUCCESS,
   QUESTION_ALL_FAIL,
   QUESTION_ALL_REQUEST,
+  QUESTION_LIST_USER_REQUEST,
+  QUESTION_LIST_USER_SUCCESS,
+  QUESTION_LIST_USER_FAIL,
+  QUESTION_LIST_CREATEDBY_FAIL,
+  QUESTION_LIST_CREATEDBY_REQUEST,
+  QUESTION_LIST_CREATEDBY_SUCCESS,
 } from "../constants/questionConstants";
 import axios from "axios";
 
@@ -250,6 +256,78 @@ export const takeQuestion = (question) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: QUESTION_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listUserQuestions = (
+  userId,
+  keyword = "",
+  pageNumber = ""
+) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: QUESTION_LIST_USER_REQUEST });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `/api/questions/user/${userId}?keyword=${keyword}&pageNumber=${pageNumber}`,
+      config
+    );
+    dispatch({
+      type: QUESTION_LIST_USER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: QUESTION_LIST_USER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listCreatedByQuestions = (
+  userId,
+  keyword = "",
+  pageNumber = ""
+) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: QUESTION_LIST_CREATEDBY_REQUEST });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `/api/questions/createdby/${userId}?keyword=${keyword}&pageNumber=${pageNumber}`,
+      config
+    );
+    dispatch({
+      type: QUESTION_LIST_CREATEDBY_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: QUESTION_LIST_CREATEDBY_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

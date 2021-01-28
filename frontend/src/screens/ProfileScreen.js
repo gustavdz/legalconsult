@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Table, Row, Col, Button, Form } from "react-bootstrap";
+import { Table, Row, Col, Button, Form, Badge } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import Paginate from "../components/Paginate";
 import { getUserDetails, updateUserProfile } from "../actions/userActions";
-import { listMyOrders } from "../actions/orderActions";
 import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
+import {
+  listUserQuestions,
+  listCreatedByQuestions,
+} from "../actions/questionActions";
 
-const ProfileScreen = ({ location, history }) => {
+const ProfileScreen = ({ match, location, history }) => {
+  const keyword = match.params.keyword || "";
+  const pageNumber = match.params.pageNumber || 1;
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,8 +33,25 @@ const ProfileScreen = ({ location, history }) => {
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
   const { success } = userUpdateProfile;
 
-  const orderListMy = useSelector((state) => state.orderListMy);
-  const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
+  const questionListUser = useSelector((state) => state.questionListUser);
+  const {
+    loading: loadingQuestions,
+    error: errorQuestions,
+    questions,
+    page,
+    pages,
+  } = questionListUser;
+
+  const questionListCreatedBy = useSelector(
+    (state) => state.questionListCreatedBy
+  );
+  const {
+    loading: loadingQuestionsAsked,
+    error: errorQuestionsAsked,
+    questions: questionsAsked,
+    page: pageAsked,
+    pages: pagesAsked,
+  } = questionListCreatedBy;
 
   useEffect(() => {
     if (!userInfo) {
@@ -36,13 +60,16 @@ const ProfileScreen = ({ location, history }) => {
       if (user._id !== userInfo._id || !user.name || success) {
         dispatch({ type: USER_UPDATE_PROFILE_RESET });
         dispatch(getUserDetails("profile"));
-        dispatch(listMyOrders());
+        (userInfo.isAdmin || userInfo.isLawyer) &&
+          dispatch(listUserQuestions(userInfo._id, keyword, pageNumber));
+        userInfo.isCustomer &&
+          dispatch(listCreatedByQuestions(userInfo._id, keyword, pageNumber));
       } else {
         setName(user.name);
         setEmail(user.email);
       }
     }
-  }, [dispatch, history, userInfo, user, success]);
+  }, [dispatch, history, userInfo, user, success, pageNumber, keyword]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -115,55 +142,198 @@ const ProfileScreen = ({ location, history }) => {
         </Form>
       </Col>
       <Col md={9}>
-        <h2>My Orders</h2>
-        {loadingOrders ? (
-          <Loader />
-        ) : errorOrders ? (
-          <Message variant="danger">{errorOrders}</Message>
-        ) : (
-          <Table striped bordered hover responsive className="table-sm">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>DATE</th>
-                <th>TOTAL</th>
-                <th>PAID</th>
-                <th>DELIVERED</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order) => (
-                <tr key={order._id}>
-                  <td>{order._id}</td>
-                  <td>{order.createdAt.substring(0, 10)}</td>
-                  <td>{order.totalPrice}</td>
-                  <td>
-                    {order.isPaid ? (
-                      order.paidAt.substring(0, 10)
-                    ) : (
-                      <i className="fas fa-times" style={{ color: "red" }}></i>
-                    )}
-                  </td>
-                  <td>
-                    {order.isDelivered ? (
-                      order.deliveredAt.substring(0, 10)
-                    ) : (
-                      <i className="fas fa-times" style={{ color: "red" }}></i>
-                    )}
-                  </td>
-                  <td>
-                    <LinkContainer to={`/order/${order._id}`}>
-                      <Button className="btn-sm" variant="light">
-                        DETAILS
-                      </Button>
-                    </LinkContainer>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        )}
+        <Row>
+          {userInfo && (userInfo.isAdmin || userInfo.isLawyer) && (
+            <Col xs={12}>
+              <h2>My Taken Questions</h2>
+              {loadingQuestions ? (
+                <Loader />
+              ) : errorQuestions ? (
+                <Message variant="danger">{errorQuestions}</Message>
+              ) : (
+                <>
+                  <Table striped bordered hover responsive className="table-sm">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>CREATED</th>
+                        <th>TITLE</th>
+                        <th>DETAILS</th>
+                        <th>AREAS</th>
+                        <th>TAKEN</th>
+                        <th>PAID</th>
+                        <th>CLOSED</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {questions.map((question, index) => (
+                        <tr key={question._id}>
+                          <td>{index + 1}</td>
+                          <td>{question.createdAt.substring(0, 10)}</td>
+                          <td>{question.title}</td>
+                          <td>{question.detail}</td>
+                          <td>
+                            {question.areas.length > 0
+                              ? question.areas.map((area) => {
+                                  return (
+                                    <Badge
+                                      variant="info"
+                                      key={area}
+                                      style={{ marginRight: "10px" }}
+                                    >
+                                      {area}
+                                    </Badge>
+                                  );
+                                })
+                              : "N/A"}
+                          </td>
+                          <td>
+                            {question.isTaken ? (
+                              question.takenAt.substring(0, 10)
+                            ) : (
+                              <i
+                                className="fas fa-times"
+                                style={{ color: "red" }}
+                              ></i>
+                            )}
+                          </td>
+                          <td>
+                            {question.isPaid ? (
+                              question.paidAt.substring(0, 10)
+                            ) : (
+                              <i
+                                className="fas fa-times"
+                                style={{ color: "red" }}
+                              ></i>
+                            )}
+                          </td>
+                          <td>
+                            {question.isClosed ? (
+                              question.closedAt.substring(0, 10)
+                            ) : (
+                              <i
+                                className="fas fa-times"
+                                style={{ color: "red" }}
+                              ></i>
+                            )}
+                          </td>
+                          <td>
+                            <LinkContainer to={`/question/${question._id}`}>
+                              <Button className="btn-sm" variant="light">
+                                DETAILS
+                              </Button>
+                            </LinkContainer>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                  <Paginate
+                    pages={pages}
+                    page={page}
+                    keyword={keyword ? keyword : ""}
+                  />
+                </>
+              )}
+            </Col>
+          )}
+          {userInfo && (userInfo.isAdmin || userInfo.isCustomer) && (
+            <Col xs={12}>
+              <h2>My Asked Questions</h2>
+              {loadingQuestionsAsked ? (
+                <Loader />
+              ) : errorQuestionsAsked ? (
+                <Message variant="danger">{errorQuestionsAsked}</Message>
+              ) : (
+                <>
+                  <Table striped bordered hover responsive className="table-sm">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>CREATED</th>
+                        <th>TITLE</th>
+                        <th>DETAILS</th>
+                        <th>AREAS</th>
+                        <th>TAKEN</th>
+                        <th>PAID</th>
+                        <th>CLOSED</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {questionsAsked.map((question, index) => (
+                        <tr key={question._id}>
+                          <td>{index + 1}</td>
+                          <td>{question.createdAt.substring(0, 10)}</td>
+                          <td>{question.title}</td>
+                          <td>{question.detail}</td>
+                          <td>
+                            {question.areas.length > 0
+                              ? question.areas.map((area) => {
+                                  return (
+                                    <Badge
+                                      variant="info"
+                                      key={area}
+                                      style={{ marginRight: "10px" }}
+                                    >
+                                      {area}
+                                    </Badge>
+                                  );
+                                })
+                              : "N/A"}
+                          </td>
+                          <td>
+                            {question.isTaken && question.takenAt ? (
+                              question.takenAt.substring(0, 10)
+                            ) : (
+                              <i
+                                className="fas fa-times"
+                                style={{ color: "red" }}
+                              ></i>
+                            )}
+                          </td>
+                          <td>
+                            {question.isPaid ? (
+                              question.paidAt.substring(0, 10)
+                            ) : (
+                              <i
+                                className="fas fa-times"
+                                style={{ color: "red" }}
+                              ></i>
+                            )}
+                          </td>
+                          <td>
+                            {question.isClosed ? (
+                              question.closedAt.substring(0, 10)
+                            ) : (
+                              <i
+                                className="fas fa-times"
+                                style={{ color: "red" }}
+                              ></i>
+                            )}
+                          </td>
+                          <td>
+                            <LinkContainer to={`/question/${question._id}`}>
+                              <Button className="btn-sm" variant="light">
+                                DETAILS
+                              </Button>
+                            </LinkContainer>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                  <Paginate
+                    pages={pagesAsked}
+                    page={pageAsked}
+                    keyword={keyword ? keyword : ""}
+                  />
+                </>
+              )}
+            </Col>
+          )}
+        </Row>
       </Col>
     </Row>
   );

@@ -70,6 +70,9 @@ const questionSchema = mongoose.Schema(
       required: false,
       ref: "User",
     },
+    takenAt: { type: Date },
+    paidAt: { type: Date },
+    closedAt: { type: Date },
   },
   {
     timestamps: true,

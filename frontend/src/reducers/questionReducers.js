@@ -24,6 +24,12 @@ import {
   QUESTION_ALL_SUCCESS,
   QUESTION_ALL_FAIL,
   QUESTION_DETAILS_RESET,
+  QUESTION_LIST_USER_REQUEST,
+  QUESTION_LIST_USER_SUCCESS,
+  QUESTION_LIST_USER_FAIL,
+  QUESTION_LIST_CREATEDBY_REQUEST,
+  QUESTION_LIST_CREATEDBY_SUCCESS,
+  QUESTION_LIST_CREATEDBY_FAIL,
 } from "../constants/questionConstants";
 
 export const questionListReducer = (state = { questions: [] }, action) => {
@@ -158,6 +164,45 @@ export const questionTakeReducer = (state = { question: {} }, action) => {
       return { loading: false, error: action.payload };
     case QUESTION_UPDATE_RESET:
       return { question: {}, error: false };
+    default:
+      return state;
+  }
+};
+
+export const questionListUserReducer = (state = { questions: [] }, action) => {
+  switch (action.type) {
+    case QUESTION_LIST_USER_REQUEST:
+      return { loading: true, questions: [] };
+    case QUESTION_LIST_USER_SUCCESS:
+      return {
+        loading: false,
+        questions: action.payload.questions,
+        pages: action.payload.pages,
+        page: action.payload.page,
+      };
+    case QUESTION_LIST_USER_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const questionListCreatedByReducer = (
+  state = { questions: [] },
+  action
+) => {
+  switch (action.type) {
+    case QUESTION_LIST_CREATEDBY_REQUEST:
+      return { loading: true, questions: [] };
+    case QUESTION_LIST_CREATEDBY_SUCCESS:
+      return {
+        loading: false,
+        questions: action.payload.questions,
+        pages: action.payload.pages,
+        page: action.payload.page,
+      };
+    case QUESTION_LIST_CREATEDBY_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

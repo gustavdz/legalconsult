@@ -69,7 +69,7 @@ const FooterLandingPage = () => {
 
       <div className="container">
         <div className="copyright">
-          <b>LegalConsult</b> &copy; {year.getFullYear()}. All Rights Reserved.
+          <b>LexiConsultas</b> &copy; {year.getFullYear()}. All Rights Reserved.
         </div>
         <div className="credits">
           Made with{" "}

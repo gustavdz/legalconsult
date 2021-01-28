@@ -74,7 +74,7 @@ const QuestionScreen = ({ history, match }) => {
                 </ListGroup.Item>
                 <ListGroup.Item>
                   Areas:{" "}
-                  {question && question.areas.length > 0
+                  {question && question.areas && question.areas.length > 0
                     ? question.areas.map((area) => {
                         return (
                           <Badge

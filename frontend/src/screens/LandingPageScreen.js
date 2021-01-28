@@ -1,5 +1,5 @@
-import React from "react";
-import { Carousel, Col, Form, Row } from "react-bootstrap";
+import React, { useState } from "react";
+import { Button, Carousel, Col, Form, Modal, Row } from "react-bootstrap";
 import Meta from "../components/Meta";
 import IntroImg from "../assets/img/intro-img.svg";
 import AboutImg from "../assets/img/about-img.svg";
@@ -27,11 +27,19 @@ import { Link } from "react-router-dom";
 import $ from "jquery";
 import MyMapComponent from "../components/MyMapComponent";
 import ScrollAnimation from "react-animate-on-scroll";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import axios from "axios";
 
 const LandingPageScreen = () => {
   const styles = {
     cursor: "pointer",
   };
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [title, setTitle] = useState("");
+  const [detail, setDetail] = useState("");
 
   // Back to top button
   $(window).scroll(function () {
@@ -46,6 +54,62 @@ const LandingPageScreen = () => {
     e.preventDefault();
     console.log("submitted message");
   };
+
+  const MySwal = withReactContent(Swal);
+
+  const questionSubmitHandler = async () => {
+    handleClose();
+    console.log("question asked");
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.post(
+      `/api/questions/public`,
+      { email, name, title, detail },
+      config
+    );
+    if (data) {
+      MySwal.fire({
+        title: <p>Thanks for trusting us!</p>,
+        text: "One of our lawyers will be in touch with you soon.",
+        footer: (
+          <>
+            Made with&nbsp;
+            <i
+              className="fa fa-heart"
+              aria-hidden="true"
+              style={{ color: "#be1931" }}
+            ></i>
+            &nbsp;by&nbsp;
+            <a
+              href="https://www.deckasoft.com"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Deckasoft
+            </a>
+          </>
+        ),
+        icon: "success",
+        confirmButtonText: "Ok",
+        showConfirmButton: false,
+      }).then(() => {
+        setName("");
+        setEmail("");
+        setTitle("");
+        setDetail("");
+        console.log("reset states");
+      });
+    }
+  };
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <>
@@ -70,9 +134,99 @@ const LandingPageScreen = () => {
               </h2>
 
               <div>
-                <Link to="/login" className="btn-get-started scrollto">
+                <Link
+                  to="#"
+                  className="btn-get-started scrollto"
+                  onClick={handleShow}
+                >
                   Get Started
                 </Link>
+
+                <Modal
+                  show={show}
+                  onHide={handleClose}
+                  size="lg"
+                  aria-labelledby="contained-modal-title-vcenter"
+                  centered
+                >
+                  <Modal.Header closeButton>
+                    <Modal.Title>Make your Question</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <Form className="contactForm">
+                      <div className="form-row">
+                        <div className="form-group col-lg-6">
+                          <input
+                            type="text"
+                            name="name"
+                            className="form-control"
+                            id="name"
+                            placeholder="Your Name"
+                            data-rule="minlen:4"
+                            data-msg="Please enter at least 4 chars"
+                            onChange={(e) => {
+                              setName(e.target.value);
+                            }}
+                          />
+                          <div className="validation"></div>
+                        </div>
+                        <div className="form-group col-lg-6">
+                          <input
+                            type="email"
+                            className="form-control"
+                            name="email"
+                            id="email"
+                            placeholder="Your Email"
+                            data-rule="email"
+                            data-msg="Please enter a valid email"
+                            onChange={(e) => {
+                              setEmail(e.target.value);
+                            }}
+                          />
+                          <div className="validation"></div>
+                        </div>
+                      </div>
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="subject"
+                          id="subject"
+                          placeholder="Subject"
+                          data-rule="minlen:4"
+                          data-msg="Please enter at least 8 chars of subject"
+                          onChange={(e) => {
+                            setTitle(e.target.value);
+                          }}
+                        />
+                        <div className="validation"></div>
+                      </div>
+                      <div className="form-group">
+                        <textarea
+                          className="form-control"
+                          name="message"
+                          rows="5"
+                          data-rule="required"
+                          data-msg="Please write something for us"
+                          placeholder="Message"
+                          onChange={(e) => {
+                            setDetail(e.target.value);
+                          }}
+                        ></textarea>
+                        <div className="validation"></div>
+                      </div>
+                      <div className="text-center"></div>
+                    </Form>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button
+                      variant="btn-get-started scrollto"
+                      onClick={questionSubmitHandler}
+                    >
+                      Send Question
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
 
                 <LinkScroll
                   to="services"

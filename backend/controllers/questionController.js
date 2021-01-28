@@ -68,6 +68,74 @@ const getQuestions = asyncHandler(async (req, res) => {
   });
 });
 
+// @desc    Fetch all questions taken by a UserId
+// @route   GET /api/questions/user/:userid
+// @access  Private/Admin/Lawyer
+const getQuestionsByUserId = asyncHandler(async (req, res) => {
+  const pageSize = 5;
+  const page = Number(req.query.pageNumber) || 1;
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: "i", //case insensitve
+        },
+      }
+    : {};
+  const count = await Question.countDocuments({
+    ...keyword,
+    takenBy: req.params.userid,
+  });
+  const questions = await Question.find({
+    ...keyword,
+    takenBy: req.params.userid,
+  })
+    .populate("user")
+    .populate("takenBy", ["-password", "-isAdmin", "-isCustomer"])
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+  res.json({
+    page,
+    pages: Math.ceil(count / pageSize),
+    count,
+    questions,
+  });
+});
+
+// @desc    Fetch all questions created by a UserId
+// @route   GET /api/questions/createdby/:userid
+// @access  Public
+const getQuestionsCreatedUserId = asyncHandler(async (req, res) => {
+  const pageSize = 5;
+  const page = Number(req.query.pageNumber) || 1;
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: "i", //case insensitve
+        },
+      }
+    : {};
+  const count = await Question.countDocuments({
+    ...keyword,
+    user: req.params.userid,
+  });
+  const questions = await Question.find({
+    ...keyword,
+    user: req.params.userid,
+  })
+    .populate("user")
+    .populate("takenBy", ["-password", "-isAdmin", "-isCustomer"])
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+  res.json({
+    page,
+    pages: Math.ceil(count / pageSize),
+    count,
+    questions,
+  });
+});
+
 // @desc    Fetch single question
 // @route   GET /api/questions/:id
 // @access  Public
@@ -171,6 +239,7 @@ const takeQuestion = asyncHandler(async (req, res) => {
   if (question) {
     question.isTaken = true;
     question.takenBy = userId;
+    question.takenAt = Date.now();
 
     await question.save();
     res.status(201).json({ message: "Question taken" });
@@ -178,6 +247,38 @@ const takeQuestion = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Question not found");
   }
+});
+
+// @desc    Create a public question
+// @route   POST /api/questions/public
+// @access  Public
+const createPublicQuestion = asyncHandler(async (req, res) => {
+  const { name, email, title, detail } = req.body;
+  const user = await User.findOne({
+    email: email,
+  });
+
+  const question = new Question({
+    title: title,
+    detail: detail,
+  });
+
+  if (!user) {
+    const newUser = new User({
+      name: name,
+      email: email,
+      password: "123456",
+      isCustomer: true,
+      isAdmin: false,
+      isLawyer: false,
+    });
+    const createdUser = await newUser.save();
+    question.user = createdUser._id;
+  } else {
+    question.user = user._id;
+  }
+  const createdQuestion = await question.save();
+  res.status(201).json(createdQuestion);
 });
 
 export {
@@ -189,4 +290,7 @@ export {
   createQuestionMessage,
   getFreeQuestions,
   takeQuestion,
+  getQuestionsByUserId,
+  createPublicQuestion,
+  getQuestionsCreatedUserId,
 };
