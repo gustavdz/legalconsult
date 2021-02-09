@@ -1,5 +1,7 @@
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { InputGroup, Form } from "@themesberg/react-bootstrap";
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
 const SearchBox = ({ history }) => {
   const [keyword, setKeyword] = useState("");
   const submitHandler = (e) => {
@@ -11,17 +13,20 @@ const SearchBox = ({ history }) => {
     }
   };
   return (
-    <Form onSubmit={submitHandler} inline>
-      <Form.Control
-        type="text"
-        name="q"
-        onChange={(e) => setKeyword(e.target.value)}
-        placeholder="Search Questions..."
-        className="mr-sm-2 ml-sm-5"
-      ></Form.Control>
-      <Button type="submit" variant="outline-success" className="p2">
-        Search
-      </Button>
+    <Form className="navbar-search" onSubmit={submitHandler}>
+      <Form.Group id="topbarSearch">
+        <InputGroup className="input-group-merge search-bar">
+          <InputGroup.Text>
+            <FontAwesomeIcon icon={faSearch} />
+          </InputGroup.Text>
+          <Form.Control
+            type="text"
+            name="q"
+            onChange={(e) => setKeyword(e.target.value)}
+            placeholder="Search Questions..."
+          />
+        </InputGroup>
+      </Form.Group>
     </Form>
   );
 };

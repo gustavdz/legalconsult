@@ -73,4 +73,4 @@ const products = [
   },
 ];
 
-export default products;
+exports.products = products;

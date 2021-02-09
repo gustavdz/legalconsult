@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
-import { Table, Button, Row, Col, Badge } from "react-bootstrap";
+import { Table, Button, Row, Col, Badge } from "@themesberg/react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
@@ -97,7 +97,6 @@ const QuestionListScreen = ({ history, match }) => {
           <Table striped bordered hover responsive className="table-sm">
             <thead>
               <tr>
-                <th>ID</th>
                 <th>TITLE</th>
                 <th>DETAIL</th>
                 <th>AREAS</th>
@@ -107,7 +106,6 @@ const QuestionListScreen = ({ history, match }) => {
             <tbody>
               {questions.map((question) => (
                 <tr key={question._id}>
-                  <td>{question._id}</td>
                   <td>{question.title}</td>
                   <td>{question.detail}</td>
                   <td>
@@ -115,9 +113,9 @@ const QuestionListScreen = ({ history, match }) => {
                       ? question.areas.map((area) => {
                           return (
                             <Badge
-                              variant="info"
+                              bg="dark"
                               key={area}
-                              style={{ marginRight: "10px" }}
+                              className="badge-md me-1"
                             >
                               {area}
                             </Badge>

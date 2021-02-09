@@ -1,6 +1,6 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
-import {
+const {
   getQuestionById,
   getQuestions,
   deleteQuestion,
@@ -12,13 +12,13 @@ import {
   getQuestionsByUserId,
   createPublicQuestion,
   getQuestionsCreatedUserId,
-} from "../controllers/questionController.js";
-import {
+} = require("../controllers/questionController");
+const {
   protect,
   admin,
   adminLawyer,
   customer,
-} from "../middleware/authMiddleware.js";
+} = require("../middleware/authMiddleware");
 
 router.route("/all").get(getQuestions);
 router.route("/").get(getFreeQuestions).post(protect, admin, createQuestion);
@@ -36,4 +36,4 @@ router
   .route("/createdby/:userid")
   .get(protect, customer, getQuestionsCreatedUserId);
 
-export default router;
+module.exports = router;

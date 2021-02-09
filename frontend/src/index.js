@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "./store";
-import "./bootstrap.min.css";
+import "./scss/volt.scss";
 import "./index.css";
 import "./landing.css";
 import "animate.css/animate.compat.css";

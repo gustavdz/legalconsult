@@ -1,17 +1,19 @@
-import path from "path";
-import express from "express";
-import dotenv from "dotenv";
-import colors from "colors";
-import morgan from "morgan";
-import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
-import connectDB from "./config/db.js";
-import products from "./data/products.js";
+const path = require("path");
+const express = require("express");
+const dotenv = require("dotenv");
+const colors = require("colors");
+const morgan = require("morgan");
+const { notFound, errorHandler } = require("./middleware/errorMiddleware");
+const connectDB = require("./config/db");
+const products = require("./data/products");
 
-import productRoutes from "./routes/productRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
-import orderRoutes from "./routes/orderRoutes.js";
-import uploadRoutes from "./routes/uploadRoutes.js";
-import questionRoutes from "./routes/questionRoutes.js";
+const { io } = require("socket.io");
+
+const productRoutes = require("./routes/productRoutes");
+const userRoutes = require("./routes/userRoutes");
+const orderRoutes = require("./routes/orderRoutes");
+const uploadRoutes = require("./routes/uploadRoutes");
+const questionRoutes = require("./routes/questionRoutes");
 
 dotenv.config();
 
@@ -34,7 +36,7 @@ app.get("/api/config/paypal", (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
 );
 
-const __dirname = path.resolve();
+//const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 if (process.env.NODE_ENV === "production") {
@@ -59,3 +61,12 @@ app.listen(
     `Server running in ${process.env.NODE_ENV} on port ${PORT}`.yellow.bold
   )
 );
+
+// const io = new SocketIO(servidor);
+// io.on("connection", (socket) => {
+//   console.log("new connection", socket.id);
+//   socket.on("test", (data) => {
+//     console.log(data);
+//     io.sockets.emit("test-response", { info: data });
+//   });
+// });

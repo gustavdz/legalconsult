@@ -42,6 +42,7 @@ const QuestionScreen = ({ history, match }) => {
       }
       dispatch(listQuestionDetails(match.params.id));
       dispatch({ type: QUESTION_CREATE_MESSAGE_RESET });
+      console.info(history);
     }
   }, [dispatch, match, successQuestionMessage, userInfo, history]);
 
@@ -104,60 +105,73 @@ const QuestionScreen = ({ history, match }) => {
 
             <Col md={6}>
               <h3>Messages</h3>
-              {question.messages.length === 0 && <Message>No Messages</Message>}
-              <ListGroup variant="flush" className="chatbox">
-                {question.messages.map((message) => (
-                  <ListGroup.Item key={message._id}>
-                    <p>{message.message}</p>
-                    <p>
-                      by <strong>{message.user.name}</strong>
-                      {" | "}
-                      {
-                        <DayJS format="YYYY-MM-DD HH:mm:ss">
-                          {message.createdAt}
-                        </DayJS>
-                      }
-                    </p>
-                  </ListGroup.Item>
-                ))}
+              {question.takenBy ? (
+                question.takenBy._id !== userInfo._id ? (
+                  <Message>Question has not been taken by you</Message>
+                ) : (
+                  <ListGroup variant="flush" className="chatbox">
+                    {question.messages.length === 0 && (
+                      <Message>No Messages</Message>
+                    )}
+                    {question.messages.map((message) => (
+                      <ListGroup.Item key={message._id}>
+                        <p>{message.message}</p>
+                        <p>
+                          by <strong>{message.user.name}</strong>
+                          {" | "}
+                          {
+                            <DayJS format="YYYY-MM-DD HH:mm:ss">
+                              {message.createdAt}
+                            </DayJS>
+                          }
+                        </p>
+                      </ListGroup.Item>
+                    ))}
 
-                <ListGroup.Item>
-                  <h2>Write a Message</h2>
-                  {successQuestionMessage && (
-                    <Message variant="success">
-                      Message sent successfully
-                    </Message>
-                  )}
-                  {loadingQuestionMessage && <Loader />}
-                  {errorQuestionMessage && (
-                    <Message variant="danger">{errorQuestionMessage}</Message>
-                  )}
-                  {userInfo ? (
-                    <Form onSubmit={submitHandler}>
-                      <Form.Group controlId="message">
-                        <Form.Label>Message</Form.Label>
-                        <Form.Control
-                          as="textarea"
-                          row="3"
-                          value={message}
-                          onChange={(e) => setMessage(e.target.value)}
-                        ></Form.Control>
-                      </Form.Group>
-                      <Button
-                        disabled={loadingQuestionMessage}
-                        type="submit"
-                        variant="primary"
-                      >
-                        Send
-                      </Button>
-                    </Form>
-                  ) : (
-                    <Message>
-                      Please <Link to="/login">sign in</Link> to send a message{" "}
-                    </Message>
-                  )}
-                </ListGroup.Item>
-              </ListGroup>
+                    <ListGroup.Item>
+                      <h2>Write a Message</h2>
+                      {successQuestionMessage && (
+                        <Message variant="success">
+                          Message sent successfully
+                        </Message>
+                      )}
+                      {loadingQuestionMessage && <Loader />}
+                      {errorQuestionMessage && (
+                        <Message variant="danger">
+                          {errorQuestionMessage}
+                        </Message>
+                      )}
+                      {userInfo ? (
+                        <Form onSubmit={submitHandler}>
+                          <Form.Group controlId="message">
+                            <Form.Label>Message</Form.Label>
+                            <Form.Control
+                              as="textarea"
+                              row="3"
+                              value={message}
+                              onChange={(e) => setMessage(e.target.value)}
+                            ></Form.Control>
+                          </Form.Group>
+                          <Button
+                            disabled={loadingQuestionMessage}
+                            type="submit"
+                            variant="primary"
+                          >
+                            Send
+                          </Button>
+                        </Form>
+                      ) : (
+                        <Message>
+                          Please <Link to="/login">sign in</Link> to send a
+                          message{" "}
+                        </Message>
+                      )}
+                    </ListGroup.Item>
+                  </ListGroup>
+                )
+              ) : (
+                <Message>Question has not been taken by you</Message>
+              )}
             </Col>
           </Row>
         </>

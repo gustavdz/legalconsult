@@ -1,7 +1,6 @@
-import { response } from "express";
-import asyncHandler from "express-async-handler";
-import Question from "../models/questionModel.js";
-import User from "../models/userModel.js";
+const asyncHandler = require("express-async-handler");
+const Question = require("../models/questionModel");
+const User = require("../models/userModel");
 
 // @desc    Fetch all not taken questions
 // @route   GET /api/questions
@@ -281,16 +280,14 @@ const createPublicQuestion = asyncHandler(async (req, res) => {
   res.status(201).json(createdQuestion);
 });
 
-export {
-  getQuestionById,
-  getQuestions,
-  deleteQuestion,
-  createQuestion,
-  updateQuestion,
-  createQuestionMessage,
-  getFreeQuestions,
-  takeQuestion,
-  getQuestionsByUserId,
-  createPublicQuestion,
-  getQuestionsCreatedUserId,
-};
+exports.getQuestionById = getQuestionById;
+exports.getQuestions = getQuestions;
+exports.deleteQuestion = deleteQuestion;
+exports.createQuestion = createQuestion;
+exports.updateQuestion = updateQuestion;
+exports.createQuestionMessage = createQuestionMessage;
+exports.getFreeQuestions = getFreeQuestions;
+exports.takeQuestion = takeQuestion;
+exports.getQuestionsByUserId = getQuestionsByUserId;
+exports.createPublicQuestion = createPublicQuestion;
+exports.getQuestionsCreatedUserId = getQuestionsCreatedUserId;

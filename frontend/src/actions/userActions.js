@@ -11,6 +11,7 @@ import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_REGISTER_LOGOUT,
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_REQUEST,
@@ -63,6 +64,9 @@ export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({
     type: USER_LOGOUT,
+  });
+  dispatch({
+    type: USER_REGISTER_LOGOUT,
   });
   dispatch({
     type: USER_DETAILS_RESET,

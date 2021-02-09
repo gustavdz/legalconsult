@@ -155,7 +155,6 @@ const ProfileScreen = ({ match, location, history }) => {
                   <Table striped bordered hover responsive className="table-sm">
                     <thead>
                       <tr>
-                        <th>ID</th>
                         <th>CREATED</th>
                         <th>TITLE</th>
                         <th>DETAILS</th>
@@ -169,7 +168,6 @@ const ProfileScreen = ({ match, location, history }) => {
                     <tbody>
                       {questions.map((question, index) => (
                         <tr key={question._id}>
-                          <td>{index + 1}</td>
                           <td>{question.createdAt.substring(0, 10)}</td>
                           <td>{question.title}</td>
                           <td>{question.detail}</td>
@@ -250,7 +248,6 @@ const ProfileScreen = ({ match, location, history }) => {
                   <Table striped bordered hover responsive className="table-sm">
                     <thead>
                       <tr>
-                        <th>ID</th>
                         <th>CREATED</th>
                         <th>TITLE</th>
                         <th>DETAILS</th>
@@ -264,7 +261,6 @@ const ProfileScreen = ({ match, location, history }) => {
                     <tbody>
                       {questionsAsked.map((question, index) => (
                         <tr key={question._id}>
-                          <td>{index + 1}</td>
                           <td>{question.createdAt.substring(0, 10)}</td>
                           <td>{question.title}</td>
                           <td>{question.detail}</td>

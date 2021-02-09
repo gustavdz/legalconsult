@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Button, Carousel, Col, Form, Modal, Row } from "react-bootstrap";
+import { Carousel, Col, Form, Row } from "react-bootstrap";
+import { Button, Modal } from "@themesberg/react-bootstrap";
 import Meta from "../components/Meta";
 import IntroImg from "../assets/img/intro-img.svg";
 import AboutImg from "../assets/img/about-img.svg";
@@ -154,7 +155,7 @@ const LandingPageScreen = () => {
                   </Modal.Header>
                   <Modal.Body>
                     <Form className="contactForm">
-                      <div className="form-row">
+                      <div className="row pb-2">
                         <div className="form-group col-lg-6">
                           <input
                             type="text"
@@ -186,7 +187,7 @@ const LandingPageScreen = () => {
                           <div className="validation"></div>
                         </div>
                       </div>
-                      <div className="form-group">
+                      <div className="form-group pb-2">
                         <input
                           type="text"
                           className="form-control"
@@ -201,7 +202,7 @@ const LandingPageScreen = () => {
                         />
                         <div className="validation"></div>
                       </div>
-                      <div className="form-group">
+                      <div className="form-group pb-2">
                         <textarea
                           className="form-control"
                           name="message"
@@ -220,7 +221,7 @@ const LandingPageScreen = () => {
                   </Modal.Body>
                   <Modal.Footer>
                     <Button
-                      variant="btn-get-started scrollto"
+                      variant="btn-get-started scrollto btn-primary"
                       onClick={questionSubmitHandler}
                     >
                       Send Question
@@ -247,7 +248,7 @@ const LandingPageScreen = () => {
         {/* Contenido de nosotros */}
         <section id="about">
           <div className="container">
-            <header className="section-header">
+            <header className="section-header py-0">
               <h3>About Us</h3>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -256,7 +257,7 @@ const LandingPageScreen = () => {
             </header>
 
             <div className="row about-container">
-              <div className="col-lg-6 content order-lg-1 order-2">
+              <div className="col-lg-6 order-lg-1 order-2">
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -379,7 +380,7 @@ const LandingPageScreen = () => {
         {/* Contenido de servicios */}
         <section id="services" className="section-bg">
           <div className="container">
-            <header className="section-header">
+            <header className="section-header py-0">
               <h3>Services</h3>
               <p>
                 Laudem latine persequeris id sed, ex fabulas delectus quo. No
@@ -516,7 +517,7 @@ const LandingPageScreen = () => {
         <section id="why-us">
           <ScrollAnimation animateIn="fadeIn">
             <div className="container">
-              <header className="section-header">
+              <header className="section-header py-0">
                 <h3>Why choose us?</h3>
                 <p>
                   Laudem latine persequeris id sed, ex fabulas delectus quo. No
@@ -532,7 +533,9 @@ const LandingPageScreen = () => {
                     <div className="card  ">
                       <i className="far fa-gem"></i>
                       <div className="card-body">
-                        <h5 className="card-title">Corporis dolorem</h5>
+                        <h5 className="card-title text-white">
+                          Corporis dolorem
+                        </h5>
                         <p className="card-text">
                           Deleniti optio et nisi dolorem debitis. Aliquam nobis
                           est temporibus sunt ab inventore officiis aut
@@ -551,7 +554,9 @@ const LandingPageScreen = () => {
                     <div className="card">
                       <i className="fas fa-language"></i>
                       <div className="card-body">
-                        <h5 className="card-title">Voluptates dolores</h5>
+                        <h5 className="card-title text-white">
+                          Voluptates dolores
+                        </h5>
                         <p className="card-text">
                           Voluptates nihil et quis omnis et eaque omnis sint
                           aut. Ducimus dolorum aspernatur.
@@ -569,7 +574,9 @@ const LandingPageScreen = () => {
                     <div className="card">
                       <i className="far fa-object-group"></i>
                       <div className="card-body">
-                        <h5 className="card-title">Eum ut aspernatur</h5>
+                        <h5 className="card-title text-white">
+                          Eum ut aspernatur
+                        </h5>
                         <p className="card-text">
                           Autem quod nesciunt eos ea aut amet laboriosam ab. Eos
                           quis porro in non nemo ex.
@@ -607,7 +614,7 @@ const LandingPageScreen = () => {
         {/* Contenido de testimonials */}
         <section id="testimonials" className="section-bg">
           <div className="container">
-            <header className="section-header">
+            <header className="section-header py-0">
               <h3>Testimonials</h3>
             </header>
 
@@ -740,7 +747,7 @@ const LandingPageScreen = () => {
         {/* Contenido de team */}
         <section id="team">
           <div className="container">
-            <div className="section-header">
+            <div className="section-header py-0">
               <h3>Team</h3>
               <p>
                 Sed ut perspiciatis unde omnis iste natus error sit voluptatem
@@ -903,7 +910,7 @@ const LandingPageScreen = () => {
         {/* Contenido de clientes */}
         <section id="clients" className="section-bg">
           <div className="container">
-            <div className="section-header">
+            <div className="section-header py-0">
               <h3>Our CLients</h3>
               <p>
                 Sed ut perspiciatis unde omnis iste natus error sit voluptatem
@@ -965,7 +972,7 @@ const LandingPageScreen = () => {
         {/* Contenido de contacto */}
         <section id="contact">
           <div className="container-fluid">
-            <div className="section-header">
+            <div className="section-header py-0">
               <h3>Contact Us</h3>
             </div>
 
