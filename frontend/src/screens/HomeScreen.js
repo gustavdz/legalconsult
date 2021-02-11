@@ -8,14 +8,11 @@ import Paginate from "../components/Paginate";
 import Loader from "../components/Loader";
 import Meta from "../components/Meta";
 import { listQuestions } from "../actions/questionActions";
-import { io } from "socket.io-client";
 
 const HomeScreen = ({ match, history }) => {
   const keyword = match.params.keyword;
   const pageNumber = match.params.pageNumber || 1;
   const [reload, setReload] = useState(false);
-  const [response, setResponse] = useState("");
-  const [counter, setCounter] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -25,21 +22,7 @@ const HomeScreen = ({ match, history }) => {
   const questionList = useSelector((state) => state.questionList);
   const { loading, error, questions, page, pages } = questionList;
 
-  const socket = io();
-
-  const handleSocket = () => {
-    console.log("mensaje enviado");
-    setCounter(counter + 1);
-    socket.emit("test", { mensaje: `Mensaje del cliente No.: ${counter}` });
-  };
-
   useEffect(() => {
-    const socket = io();
-    socket.on("test-response", (data) => {
-      console.log("mensaje recibido");
-      setResponse(data.info.mensaje);
-    });
-
     if (!userInfo) {
       history.push("/login");
     } else {
@@ -57,10 +40,6 @@ const HomeScreen = ({ match, history }) => {
         </Link>
       )}
       <h1>Lastest Questions</h1>
-      <Button variant="info" onClick={handleSocket}>
-        Test Socket
-      </Button>
-      <div id="responses">{response}</div>
       {loading ? (
         <Loader />
       ) : error ? (
