@@ -24,3 +24,64 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 /.idea
+
+#app
+# OSX
+#
+LexiConsultasApp/.DS_Store
+
+# Xcode
+#
+LexiConsultasApp/build/
+LexiConsultasApp/*.pbxuser
+LexiConsultasApp/!default.pbxuser
+LexiConsultasApp/*.mode1v3
+LexiConsultasApp/!default.mode1v3
+LexiConsultasApp/*.mode2v3
+LexiConsultasApp/!default.mode2v3
+LexiConsultasApp/*.perspectivev3
+LexiConsultasApp/!default.perspectivev3
+LexiConsultasApp/xcuserdata
+LexiConsultasApp/*.xccheckout
+LexiConsultasApp/*.moved-aside
+LexiConsultasApp/DerivedData
+LexiConsultasApp/*.hmap
+LexiConsultasApp/*.ipa
+LexiConsultasApp/*.xcuserstate
+
+# Android/IntelliJ
+#
+LexiConsultasApp/build/
+LexiConsultasApp/.idea
+LexiConsultasApp/.gradle
+LexiConsultasApp/local.properties
+LexiConsultasApp/*.iml
+
+# node.js
+#
+LexiConsultasApp/node_modules/
+LexiConsultasApp/npm-debug.log
+LexiConsultasApp/yarn-error.log
+
+# BUCK
+LexiConsultasApp/buck-out/
+LexiConsultasApp/\.buckd/
+LexiConsultasApp/*.keystore
+LexiConsultasApp/!debug.keystore
+
+# fastlane
+#
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
+# screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/
+
+LexiConsultasApp/*/fastlane/report.xml
+LexiConsultasApp/*/fastlane/Preview.html
+LexiConsultasApp/*/fastlane/screenshots
+
+# Bundle artifact
+LexiConsultasApp/*.jsbundle
+
+# CocoaPods
+LexiConsultasApp/ios/Pods/
