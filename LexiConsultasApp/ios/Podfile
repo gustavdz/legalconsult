@@ -12,6 +12,8 @@ target 'LexiConsultasApp' do
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
+  pod 'RNSweetAlert', :path => '../node_modules/react-native-sweet-alert'
+
   target 'LexiConsultasAppTests' do
     inherit! :complete
     # Pods for testing

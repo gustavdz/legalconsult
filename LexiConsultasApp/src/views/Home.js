@@ -6,6 +6,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 //Componentes
 import Lista from '../components/Lista';
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import LinearGradient from "react-native-linear-gradient";
 
 const Home = ({navigation}) => {
 
@@ -42,22 +44,29 @@ const Home = ({navigation}) => {
 
   return (
       <View style={styles.container}>
+          <LinearGradient colors={['#252b40', '#252b40']} style={styles.container}>
 
-          <SafeAreaView style={{flex: 1}}>
+
+
+          <SafeAreaView style={{flex: 1,}}>
               <TouchableOpacity
                 style={{alignItems: "flex-end", margin: 16}}
                 onPress={() => toggleMenu(navigation)} >
               <FontAwesome
                   name="bars"
-                  color="#fff"
+                  color="#f5f8fb"
                   size={24}
               />
 
               </TouchableOpacity>
 
+              <View style={styles.headerContainer}>
+                  <Text style={styles.textHeader}>Casos Disponibles</Text>
+              </View>
+
               <FlatList
                   data={questions}
-
+                  style={styles.questionContainer}
                   renderItem={ ({item}) => <Lista item={item} /> }
                   keyExtractor = { question => question._id}
               />
@@ -65,7 +74,7 @@ const Home = ({navigation}) => {
           </SafeAreaView>
 
 
-
+          </LinearGradient>
 
       </View>
   )
@@ -75,8 +84,33 @@ const styles = StyleSheet.create({
    container: {
        flex: 1,
        flexDirection: 'row',
-       backgroundColor: '#021e02'
-   }
+       //backgroundColor: '#272b4f'
+   },
+
+    headerContainer: {
+        justifyContent: 'flex-end',
+        paddingHorizontal: 20,
+        paddingTop: 10,
+        paddingBottom: 20
+    },
+
+    textHeader: {
+        color: '#f5f8fb',
+        fontWeight: 'bold',
+        textAlign:'center',
+        fontSize: 30
+    },
+
+
+
+    questionContainer: {
+        flex: 1,
+        padding: 10,
+        backgroundColor: 'rgba(245, 248, 251, 1)',
+        borderRadius: 10,
+        margin: 2
+
+    }
 });
 
 export default Home;

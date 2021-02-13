@@ -93,6 +93,7 @@ const SignIn = ({navigation}) => {
 
     return (
         <ScrollView style={styles.container}>
+            <LinearGradient colors={['#272b4f', '#003973']} style={styles.container}>
             <Animatable.View animation="fadeIn" duration={1500} style={styles.header}>
                 <Text style={styles.textHeader}>Bienvenido a Deckasoft!</Text>
             </Animatable.View>
@@ -181,6 +182,7 @@ const SignIn = ({navigation}) => {
 
 
             </Animatable.View>
+            </LinearGradient>
         </ScrollView>
     )
 
@@ -190,17 +192,18 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        backgroundColor: '#021e02',
+        //backgroundColor: '#021e02',
     },
     header: {
         flex:1,
         justifyContent: 'flex-end',
         paddingHorizontal: 20,
+        paddingTop: 20,
         paddingBottom: 50
     },
     footer: {
         flex: 3,
-        backgroundColor: 'white',
+        backgroundColor: '#f5f8fb',
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         paddingHorizontal: 20,
@@ -210,6 +213,7 @@ const styles = StyleSheet.create({
     textHeader: {
         color: 'white',
         fontWeight: 'bold',
+        textAlign:'center',
         fontSize: 30
     },
     textFooter: {
