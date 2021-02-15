@@ -8,11 +8,14 @@ import Paginate from "../components/Paginate";
 import Loader from "../components/Loader";
 import Meta from "../components/Meta";
 import { listQuestions } from "../actions/questionActions";
+import io from "socket.io-client";
 
 const HomeScreen = ({ match, history }) => {
   const keyword = match.params.keyword;
   const pageNumber = match.params.pageNumber || 1;
   const [reload, setReload] = useState(false);
+  const [response, setResponse] = useState("");
+  //const ENDPOINT = "http://127.0.0.1:4001";
 
   const dispatch = useDispatch();
 
@@ -22,6 +25,12 @@ const HomeScreen = ({ match, history }) => {
   const questionList = useSelector((state) => state.questionList);
   const { loading, error, questions, page, pages } = questionList;
 
+  useEffect(() => {
+    const socket = io();
+    socket.on("identification", (data) => {
+      setResponse(data);
+    });
+  }, []);
   useEffect(() => {
     if (!userInfo) {
       history.push("/login");
@@ -39,7 +48,7 @@ const HomeScreen = ({ match, history }) => {
           Go Back
         </Link>
       )}
-      <h1>Lastest Questions</h1>
+      <h1>Lastest Questions - {response}</h1>
       {loading ? (
         <Loader />
       ) : error ? (

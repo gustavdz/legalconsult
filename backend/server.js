@@ -82,7 +82,9 @@ server.listen(
 
 io.on("connection", (socket) => {
   console.log("new connection", socket.id);
+  socket.emit("identification", socket.id);
   socket.on("test", (body) => {
+    // sending to all clients except sender
     socket.broadcast.emit("test-response", { body, from: socket.id.slice(8) });
   });
 });
