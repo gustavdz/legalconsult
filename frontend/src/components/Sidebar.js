@@ -13,6 +13,7 @@ import {
   faHandHoldingUsd,
   faSignOutAlt,
   faTimes,
+  faUserFriends,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   Nav,
@@ -185,24 +186,29 @@ const Sidebar = () => {
                   </Nav.Link>
                 </div>
                 <Nav className="flex-column pt-3 pt-md-0">
-                  <NavItem title="Overview" link="/home" icon={faChartPie} />
+                  <NavItem title="Dashboard" link="/home" icon={faChartPie} />
                   {/* <NavItem title="Volt React" link="/home" image={ReactHero} /> */}
                   <NavItem
-                    title="My Cases"
+                    title="Mis Casos"
                     icon={faHandHoldingUsd}
                     link="/mycases"
+                  />
+                  <NavItem
+                    title="Mis Clientes"
+                    icon={faUserFriends}
+                    link="/customers"
                   />
                   {/* <NavItem title="Settings" icon={faCog} link="/home" /> */}
                   {userInfo && userInfo.isAdmin && (
                     <CollapsableNavItem
                       eventKey="admin/"
-                      title="Administration"
+                      title="Administración"
                       icon={faCog}
                     >
-                      <NavItem title="Users" link="/admin/userlist" />
-                      <NavItem title="Questions" link="/admin/questionlist" />
-                      <NavItem title="Products" link="/admin/productlist" />
-                      <NavItem title="Orders" link="/admin/orderlist" />
+                      <NavItem title="Usuarios" link="/admin/userlist" />
+                      <NavItem title="Casos" link="/admin/questionlist" />
+                      <NavItem title="Productos" link="/admin/productlist" />
+                      <NavItem title="Órdenes" link="/admin/orderlist" />
                     </CollapsableNavItem>
                   )}
 

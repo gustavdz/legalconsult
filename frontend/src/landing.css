@@ -485,7 +485,7 @@ h6 {
 --------------------------------*/
 
 #about {
-  background: #fff;
+  background: #f5f8fb;
   padding: 60px 0;
 }
 
@@ -512,14 +512,14 @@ h6 {
 }
 
 #about .about-container .icon-box {
-  background: #fff;
+  background: #f5f8fb;
   background-size: cover;
   padding: 0 0 30px 0;
 }
 
 #about .about-container .icon-box .icon {
   float: left;
-  background: #fff;
+  background: #f5f8fb;
   width: 64px;
   height: 64px;
   display: -webkit-box;
@@ -555,7 +555,7 @@ h6 {
 }
 
 #about .about-container .icon-box:hover .icon i {
-  color: #fff;
+  color: #f5f8fb;
 }
 
 #about .about-container .icon-box .title {

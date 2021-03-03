@@ -31,6 +31,9 @@ const userSchema = mongoose.Schema(
       required: true,
       default: true,
     },
+    questionCount: {
+      type: Number,
+    },
   },
   {
     timestamps: true,

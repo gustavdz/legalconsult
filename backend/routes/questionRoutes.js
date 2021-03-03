@@ -12,6 +12,7 @@ const {
   getQuestionsByUserId,
   createPublicQuestion,
   getQuestionsCreatedUserId,
+  createQuestionTakenByMe,
 } = require("../controllers/questionController");
 const {
   protect,
@@ -30,6 +31,10 @@ router
   .get(getQuestionById)
   .delete(protect, admin, deleteQuestion)
   .put(protect, admin, updateQuestion);
+
+router
+  .route("/createdbyme")
+  .post(protect, adminLawyer, createQuestionTakenByMe);
 
 router.route("/user/:userid").get(protect, getQuestionsByUserId);
 router

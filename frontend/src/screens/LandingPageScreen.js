@@ -31,6 +31,7 @@ import ScrollAnimation from "react-animate-on-scroll";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import axios from "axios";
+import Select from "react-select";
 
 const LandingPageScreen = () => {
   const styles = {
@@ -41,6 +42,23 @@ const LandingPageScreen = () => {
   const [email, setEmail] = useState("");
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
+  const [areas, setAreas] = useState(null);
+
+  const areasAvailable = [
+    { value: "Administrativo", label: "Administrativo" },
+    { value: "Civil", label: "Civil" },
+    { value: "Familia", label: "Familia" },
+    { value: "Laboral", label: "Laboral" },
+    { value: "Penal", label: "Penal" },
+    { value: "Societario", label: "Societario" },
+    { value: "Tránsito", label: "Tránsito" },
+    { value: "Tributario", label: "Tributario" },
+    { value: "Otros", label: "Otros" },
+  ];
+
+  const handleAreaChange = (selectedOption) => {
+    setAreas(selectedOption);
+  };
 
   // Back to top button
   $(window).scroll(function () {
@@ -60,7 +78,7 @@ const LandingPageScreen = () => {
 
   const questionSubmitHandler = async () => {
     handleClose();
-    console.log("question asked");
+    // console.log("question asked");
 
     const config = {
       headers: {
@@ -69,7 +87,7 @@ const LandingPageScreen = () => {
     };
     const { data } = await axios.post(
       `/api/questions/public`,
-      { email, name, title, detail },
+      { email, name, title, detail, areas },
       config
     );
     if (data) {
@@ -127,11 +145,11 @@ const LandingPageScreen = () => {
           <div className="intro-info">
             <ScrollAnimation className="fadeInLeft">
               <h2>
-                We provide
+                Realiza tu primera
                 <br />
-                <span>solutions</span>
+                <span>consulta</span>
                 <br />
-                for your business!
+                con nosotros!
               </h2>
 
               <div>
@@ -140,7 +158,7 @@ const LandingPageScreen = () => {
                   className="btn-get-started scrollto"
                   onClick={handleShow}
                 >
-                  Get Started
+                  Consultar
                 </Link>
 
                 <Modal
@@ -151,7 +169,7 @@ const LandingPageScreen = () => {
                   centered
                 >
                   <Modal.Header closeButton>
-                    <Modal.Title>Make your Question</Modal.Title>
+                    <Modal.Title>Explícanos tu caso</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
                     <Form className="contactForm">
@@ -162,9 +180,9 @@ const LandingPageScreen = () => {
                             name="name"
                             className="form-control"
                             id="name"
-                            placeholder="Your Name"
+                            placeholder="Ej. Juan Pérez"
                             data-rule="minlen:4"
-                            data-msg="Please enter at least 4 chars"
+                            data-msg="Por favor ingrese mínimo 4 caracteres"
                             onChange={(e) => {
                               setName(e.target.value);
                             }}
@@ -177,9 +195,9 @@ const LandingPageScreen = () => {
                             className="form-control"
                             name="email"
                             id="email"
-                            placeholder="Your Email"
+                            placeholder="juan.perez@example.com"
                             data-rule="email"
-                            data-msg="Please enter a valid email"
+                            data-msg="Por favor ingrese un email válido"
                             onChange={(e) => {
                               setEmail(e.target.value);
                             }}
@@ -193,9 +211,9 @@ const LandingPageScreen = () => {
                           className="form-control"
                           name="subject"
                           id="subject"
-                          placeholder="Subject"
+                          placeholder="Título del caso"
                           data-rule="minlen:4"
-                          data-msg="Please enter at least 8 chars of subject"
+                          data-msg="Por favor ingrese mínimo 4 caracteres"
                           onChange={(e) => {
                             setTitle(e.target.value);
                           }}
@@ -208,14 +226,27 @@ const LandingPageScreen = () => {
                           name="message"
                           rows="5"
                           data-rule="required"
-                          data-msg="Please write something for us"
-                          placeholder="Message"
+                          data-msg="Explique su caso aquí"
+                          placeholder="Detalle del caso"
                           onChange={(e) => {
                             setDetail(e.target.value);
                           }}
                         ></textarea>
                         <div className="validation"></div>
                       </div>
+
+                      <div className="form-group pb-2">
+                        <Select
+                          value={areas}
+                          onChange={handleAreaChange}
+                          placeholder="Select the areas..."
+                          options={areasAvailable}
+                          isMulti
+                          style={{ borderRadius: "0px", marginBottom: "10px" }}
+                        />
+                        <div className="validation"></div>
+                      </div>
+
                       <div className="text-center"></div>
                     </Form>
                   </Modal.Body>
@@ -224,7 +255,7 @@ const LandingPageScreen = () => {
                       variant="btn-get-started scrollto btn-primary"
                       onClick={questionSubmitHandler}
                     >
-                      Send Question
+                      Enviar
                     </Button>
                   </Modal.Footer>
                 </Modal>
@@ -237,7 +268,7 @@ const LandingPageScreen = () => {
                   duration={500}
                   className="btn-services scrollto"
                 >
-                  Our Services
+                  Nuestro proceso
                 </LinkScroll>
               </div>
             </ScrollAnimation>
@@ -249,20 +280,22 @@ const LandingPageScreen = () => {
         <section id="about">
           <div className="container">
             <header className="section-header py-0">
-              <h3>About Us</h3>
+              <h3>Acerca de Nosotros</h3>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Te conectamos con los mejores abogados del país para que sigan
+                tu caso o te asesoren en tus consultas.
               </p>
             </header>
 
             <div className="row about-container">
               <div className="col-lg-6 order-lg-1 order-2">
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
+                  Lexiconsultas es un software para personas que necesitan
+                  asesoría jurídica. Conectamos los posibles casos con abogados
+                  del país altamente calificados, ayudando de esta manera a
+                  generar más clientes para los estudios jurídicos, y al mismo
+                  tiempo, ayudando a las personas a conocer el estado de sus
+                  procesos jurídicos.
                 </p>
 
                 <ScrollAnimation animateIn="fadeInUp">
@@ -270,7 +303,7 @@ const LandingPageScreen = () => {
                     <div className="icon">
                       <i className="fa fa-shopping-bag"></i>
                     </div>
-                    <h4 className="title">Eiusmod Tempor</h4>
+                    <h4 className="title">Asesorías</h4>
                     <p className="description">
                       Et harum quidem rerum facilis est et expedita distinctio.
                       Nam libero tempore, cum soluta nobis est eligendi
@@ -281,9 +314,9 @@ const LandingPageScreen = () => {
                 <ScrollAnimation animateIn="fadeInUp" delay={200}>
                   <div className="icon-box" data-wow-delay="0.2s">
                     <div className="icon">
-                      <i className="far fa-image"></i>
+                      <i className="fas fa-question"></i>
                     </div>
-                    <h4 className="title">Magni Dolores</h4>
+                    <h4 className="title">Sistema de consultas</h4>
                     <p className="description">
                       Excepteur sint occaecat cupidatat non proident, sunt in
                       culpa qui officia deserunt mollit anim id est laborum
@@ -294,9 +327,9 @@ const LandingPageScreen = () => {
                 <ScrollAnimation animateIn="fadeInUp" delay={400}>
                   <div className="icon-box" data-wow-delay="0.4s">
                     <div className="icon">
-                      <i className="fas fa-chart-bar"></i>
+                      <i className="fas fa-stopwatch"></i>
                     </div>
-                    <h4 className="title">Dolor Sitema</h4>
+                    <h4 className="title">Ahorro de tiempo</h4>
                     <p className="description">
                       Minim veniam, quis nostrud exercitation ullamco laboris
                       nisi ut aliquip ex ea commodo consequat tarad limino ata
@@ -322,8 +355,8 @@ const LandingPageScreen = () => {
               <div className="col-lg-6 pt-5 pt-lg-0">
                 <ScrollAnimation animateIn="fadeInUp" delay={0}>
                   <h4>
-                    Voluptatem dignissimos provident quasi corporis voluptates
-                    sit assumenda.
+                    1. ¿Tienes alguna consulta o un caso legal y necesitas
+                    representación o asesoría?
                   </h4>
                   <p>
                     Ipsum in aspernatur ut possimus sint. Quia omnis est
@@ -351,8 +384,8 @@ const LandingPageScreen = () => {
               <div className="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1">
                 <ScrollAnimation animateIn="fadeInLeft">
                   <h4>
-                    Neque saepe temporibus repellat ea ipsum et. Id vel et quia
-                    tempora facere reprehenderit.
+                    2. Nuestros abogados socios tendrán acceso a tus consultas y
+                    te contactarán
                   </h4>
                   <p>
                     Delectus alias ut incidunt delectus nam placeat in
@@ -381,7 +414,7 @@ const LandingPageScreen = () => {
         <section id="services" className="section-bg">
           <div className="container">
             <header className="section-header py-0">
-              <h3>Services</h3>
+              <h3>Servicios</h3>
               <p>
                 Laudem latine persequeris id sed, ex fabulas delectus quo. No
                 vel partiendo abhorreant vituperatoribus.

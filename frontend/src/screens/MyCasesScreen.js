@@ -7,6 +7,7 @@ import Message from "../components/Message";
 import Paginate from "../components/Paginate";
 
 import { listUserQuestions } from "../actions/questionActions";
+import { Link } from "react-router-dom";
 
 const MyCasesScreen = ({ match, location, history }) => {
   const keyword = match.params.keyword || "";
@@ -35,102 +36,117 @@ const MyCasesScreen = ({ match, location, history }) => {
   }, [dispatch, history, userInfo, pageNumber, keyword]);
 
   return (
-    <Row>
-      {userInfo && (userInfo.isAdmin || userInfo.isLawyer) && (
-        <Col xs={12}>
-          <h2>My Taken Questions</h2>
-          {loadingQuestions ? (
-            <Loader />
-          ) : errorQuestions ? (
-            <Message variant="danger">{errorQuestions}</Message>
-          ) : (
-            <>
-              <Table striped bordered hover responsive className="table-sm">
-                <thead>
-                  <tr>
-                    <th>CREATED</th>
-                    <th>TITLE</th>
-                    <th>DETAILS</th>
-                    <th>AREAS</th>
-                    <th>TAKEN</th>
-                    <th>PAID</th>
-                    <th>CLOSED</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {questions.map((question, index) => (
-                    <tr key={question._id}>
-                      <td>{question.createdAt.substring(0, 10)}</td>
-                      <td>{question.title}</td>
-                      <td>{question.detail}</td>
-                      <td>
-                        {question.areas.length > 0
-                          ? question.areas.map((area) => {
-                              return (
-                                <Badge
-                                  bg="dark"
-                                  key={area}
-                                  className="badge-md me-1"
-                                >
-                                  {area}
-                                </Badge>
-                              );
-                            })
-                          : "N/A"}
-                      </td>
-                      <td>
-                        {question.isTaken ? (
-                          question.takenAt.substring(0, 10)
-                        ) : (
-                          <i
-                            className="fas fa-times"
-                            style={{ color: "red" }}
-                          ></i>
-                        )}
-                      </td>
-                      <td>
-                        {question.isPaid ? (
-                          question.paidAt.substring(0, 10)
-                        ) : (
-                          <i
-                            className="fas fa-times"
-                            style={{ color: "red" }}
-                          ></i>
-                        )}
-                      </td>
-                      <td>
-                        {question.isClosed ? (
-                          question.closedAt.substring(0, 10)
-                        ) : (
-                          <i
-                            className="fas fa-times"
-                            style={{ color: "red" }}
-                          ></i>
-                        )}
-                      </td>
-                      <td>
-                        <LinkContainer to={`/question/${question._id}`}>
-                          <Button className="btn-sm" variant="light">
-                            DETAILS
-                          </Button>
-                        </LinkContainer>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-              <Paginate
-                pages={pages}
-                page={page}
-                isAdmin={true}
-                screen={"mycases"}
-              />
-            </>
-          )}
+    <>
+      <Row className="align-items-center">
+        <Col>
+          <h1>Mis Casos</h1>
         </Col>
+        <Col className="text-right">
+          <Link to="/mycases/question/create" className="btn btn-primary my-3">
+            <i className="fas fa-plus"></i> Crear un Caso
+          </Link>
+        </Col>
+      </Row>
+      {userInfo && (userInfo.isAdmin || userInfo.isLawyer) && (
+        <Row>
+          <Col xs={12}>
+            {loadingQuestions ? (
+              <Loader />
+            ) : errorQuestions ? (
+              <Message variant="danger">{errorQuestions}</Message>
+            ) : (
+              <>
+                <Table striped bordered hover responsive className="table-sm">
+                  <thead>
+                    <tr>
+                      <th>CREATED</th>
+                      <th>TITLE</th>
+                      <th>DETAILS</th>
+                      <th>AREAS</th>
+                      <th>TAKEN</th>
+                      <th>PAID</th>
+                      <th>CLOSED</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {questions.map((question, index) => (
+                      <tr key={question._id}>
+                        <td>{question.createdAt.substring(0, 10)}</td>
+                        <td>{question.title}</td>
+                        <td>
+                          {question.detail.length > 50
+                            ? question.detail.substring(0, 50) + "..."
+                            : question.detail}
+                        </td>
+                        <td>
+                          {question.areas.length > 0
+                            ? question.areas.map((area) => {
+                                return (
+                                  <Badge
+                                    bg="dark"
+                                    key={area}
+                                    className="badge-md me-1"
+                                  >
+                                    {area}
+                                  </Badge>
+                                );
+                              })
+                            : "N/A"}
+                        </td>
+                        <td>
+                          {question.isTaken ? (
+                            question.takenAt.substring(0, 10)
+                          ) : (
+                            <i
+                              className="fas fa-times"
+                              style={{ color: "red" }}
+                            ></i>
+                          )}
+                        </td>
+                        <td>
+                          {question.isPaid ? (
+                            question.paidAt.substring(0, 10)
+                          ) : (
+                            <i
+                              className="fas fa-times"
+                              style={{ color: "red" }}
+                            ></i>
+                          )}
+                        </td>
+                        <td>
+                          {question.isClosed ? (
+                            question.closedAt.substring(0, 10)
+                          ) : (
+                            <i
+                              className="fas fa-times"
+                              style={{ color: "red" }}
+                            ></i>
+                          )}
+                        </td>
+                        <td>
+                          <LinkContainer to={`/question/${question._id}`}>
+                            <Button className="btn-sm" variant="info">
+                              DETAILS
+                            </Button>
+                          </LinkContainer>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+                <Paginate
+                  pages={pages}
+                  page={page}
+                  isAdmin={true}
+                  screen={"mycases"}
+                />
+              </>
+            )}
+          </Col>
+        </Row>
       )}
-    </Row>
+    </>
   );
 };
 

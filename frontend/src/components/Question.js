@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Badge, Button, Card, Col, Row } from "react-bootstrap";
+import { Row, Col, Button, Badge, Card } from "@themesberg/react-bootstrap";
 import DayJS from "react-dayjs";
 import { takeQuestion } from "../actions/questionActions";
 import { useDispatch, useSelector } from "react-redux";
@@ -54,13 +54,9 @@ const Question = ({ question, userInfo, setReload }) => {
             <Col xs={12} md={10}>
               Areas:{" "}
               {question.areas.length > 0
-                ? question.areas.map((area) => {
+                ? question.areas.map((area, i) => {
                     return (
-                      <Badge
-                        variant="info"
-                        key={area}
-                        style={{ marginRight: "10px" }}
-                      >
+                      <Badge key={i} className="badge-md me-1 bg-dark">
                         {area}
                       </Badge>
                     );

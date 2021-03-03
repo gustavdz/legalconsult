@@ -92,6 +92,7 @@ const RegisterScreen = ({ location, history }) => {
                       </InputGroup.Text>
                       <Form.Control
                         as="select"
+                        className="mb-0"
                         value={role}
                         onChange={(e) => setRole(e.target.value)}
                       >
@@ -113,6 +114,7 @@ const RegisterScreen = ({ location, history }) => {
                       <Form.Control
                         autoFocus
                         required
+                        className="mb-0"
                         type="text"
                         placeholder="Ex. John Doe"
                         value={name}
@@ -131,6 +133,7 @@ const RegisterScreen = ({ location, history }) => {
                       </InputGroup.Text>
                       <Form.Control
                         required
+                        className="mb-0"
                         type="email"
                         placeholder="example@company.com"
                         value={email}
@@ -149,6 +152,7 @@ const RegisterScreen = ({ location, history }) => {
                       </InputGroup.Text>
                       <Form.Control
                         required
+                        className="mb-0"
                         type="password"
                         placeholder="Password"
                         value={password}
@@ -167,6 +171,7 @@ const RegisterScreen = ({ location, history }) => {
                       </InputGroup.Text>
                       <Form.Control
                         required
+                        className="mb-0"
                         type="password"
                         placeholder="Password"
                         value={confirmPassword}

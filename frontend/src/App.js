@@ -24,6 +24,8 @@ import FooterLandingPage from "./components/FooterLandingPage";
 import QuestionScreen from "./screens/QuestionScreen";
 import QuestionListScreen from "./screens/QuestionListScreen";
 import QuestionEditScreen from "./screens/QuestionEditScreen";
+import QuestionCreateScreen from "./screens/QuestionCreateScreen";
+import MyCustomersScreen from "./screens/MyCustomersScreen";
 import Sidebar from "./components/Sidebar";
 import Preloader from "./components/Preloader";
 import FooterAdmin from "./components/FooterAdmin";
@@ -115,7 +117,7 @@ const App = () => {
                     component={QuestionListScreen}
                     exact
                   />
-                  <Route path="/mycases" component={MyCasesScreen} exact />
+
                   <Route
                     path="/mycases/:pageNumber"
                     component={MyCasesScreen}
@@ -124,6 +126,17 @@ const App = () => {
                   <Route
                     path="/admin/question/:id/edit"
                     component={QuestionEditScreen}
+                  />
+                  <Route
+                    exact
+                    path="/mycases/question/create"
+                    component={QuestionCreateScreen}
+                  />
+                  <Route path="/mycases" component={MyCasesScreen} exact />
+                  <Route
+                    path="/customers"
+                    component={MyCustomersScreen}
+                    exact
                   />
                   <Route path="/admin/orderlist" component={OrderListScreen} />
                   <Route component={NotFoundScreen} />

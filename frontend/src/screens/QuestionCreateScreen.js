@@ -8,38 +8,24 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import FormContainer from "../components/FormContainer";
 
-import {
-  listQuestionDetails,
-  updateQuestion,
-} from "../actions/questionActions";
+import { createQuestionByMe } from "../actions/questionActions";
 
 import { listUsers } from "../actions/userActions";
 
-import { QUESTION_UPDATE_RESET } from "../constants/questionConstants";
+import { QUESTION_CREATE_RESET } from "../constants/questionConstants";
 
-const QuestionEditScreen = ({ match, history }) => {
-  const questionId = match.params.id;
-
+const QuestionCreateScreen = ({ match, history }) => {
   const [title, setTitle] = useState("");
-  const [detail, setDetail] = useState(0);
-  const [isPaid, setIsPaid] = useState(false);
-  const [isTaken, setIsTaken] = useState(false);
-  const [isClosed, setIsClosed] = useState(false);
+  const [detail, setDetail] = useState("");
+
   const [areas, setAreas] = useState(null);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState("");
   const [usersAvailable, setUsersAvailable] = useState([]);
 
   const dispatch = useDispatch();
 
-  const questionDetails = useSelector((state) => state.questionDetails);
-  const { loading, error, question } = questionDetails;
-
-  const questionUpdate = useSelector((state) => state.questionUpdate);
-  const {
-    loading: loadingUpdate,
-    error: errorUpdate,
-    success: successUpdate,
-  } = questionUpdate;
+  const questionCreate = useSelector((state) => state.questionCreate);
+  const { loading, error, success } = questionCreate;
 
   const userList = useSelector((state) => state.userList);
   const { loading: loadingUsers, users, error: errorUsers } = userList;
@@ -65,26 +51,10 @@ const QuestionEditScreen = ({ match, history }) => {
   };
 
   useEffect(() => {
-    if (successUpdate) {
-      dispatch({ type: QUESTION_UPDATE_RESET });
-      history.push("/admin/questionlist");
+    if (success) {
+      dispatch({ type: QUESTION_CREATE_RESET });
+      history.push("/mycases");
     } else {
-      if (!question.title || question._id !== questionId) {
-        dispatch(listQuestionDetails(questionId));
-        dispatch(listUsers());
-      } else {
-        setTitle(question.title);
-        setDetail(question.detail);
-        setIsPaid(false);
-        setIsTaken(false);
-        setIsClosed(false);
-        setAreas(
-          question.areas.map((x) => {
-            return { value: x, label: x };
-          })
-        );
-        setUser({ value: question.user._id, label: question.user.name });
-      }
       if (users && users.length > 0) {
         // console.log(users);
         setUsersAvailable(
@@ -92,36 +62,32 @@ const QuestionEditScreen = ({ match, history }) => {
             return { value: user._id, label: user.name };
           })
         );
+      } else {
+        dispatch(listUsers());
       }
     }
-  }, [dispatch, questionId, question, history, successUpdate, users]);
+  }, [dispatch, history, success, users]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-
     dispatch(
-      updateQuestion({
-        _id: questionId,
+      createQuestionByMe({
         title,
         detail,
         areas: areas && areas.length > 0 ? areas.map((x) => x.value) : [],
-        isPaid,
-        isClosed,
-        isTaken,
+        user: user.value,
       })
     );
   };
 
   return (
     <>
-      <Link to="/admin/questionlist" className="btn btn-light my-3">
+      <Link to="/mycases" className="btn btn-light my-3">
         Regresar
       </Link>
       <FormContainer>
-        <h1>Editar el caso</h1>
-        {loadingUpdate && <Loader />}
+        <h1>Nuevo caso</h1>
         {loadingUsers && <Loader />}
-        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {errorUsers && <Message variant="danger">{errorUsers}</Message>}
         {loading ? (
           <Loader />
@@ -138,6 +104,7 @@ const QuestionEditScreen = ({ match, history }) => {
                 onChange={(e) => {
                   setTitle(e.target.value);
                 }}
+                style={{ marginBottom: "10px" }}
               ></Form.Control>
             </Form.Group>
 
@@ -151,6 +118,7 @@ const QuestionEditScreen = ({ match, history }) => {
                 onChange={(e) => {
                   setDetail(e.target.value);
                 }}
+                style={{ marginBottom: "10px" }}
               />
             </Form.Group>
 
@@ -162,7 +130,7 @@ const QuestionEditScreen = ({ match, history }) => {
                 onChange={handleAreaChange}
                 options={areasAvailable}
                 isMulti
-                style={{ borderRadius: "0px" }}
+                style={{ borderRadius: "0px", marginBottom: "10px" }}
               />
             </Form.Group>
 
@@ -174,7 +142,7 @@ const QuestionEditScreen = ({ match, history }) => {
                   placeholder="Select the user..."
                   onChange={handleUserChange}
                   options={usersAvailable}
-                  style={{ borderRadius: "0px" }}
+                  style={{ borderRadius: "0px", marginBottom: "10px" }}
                 />
               </Form.Group>
             ) : (
@@ -195,4 +163,4 @@ const QuestionEditScreen = ({ match, history }) => {
   );
 };
 
-export default QuestionEditScreen;
+export default QuestionCreateScreen;

@@ -8,14 +8,15 @@ const User = require("../models/userModel");
 const getFreeQuestions = asyncHandler(async (req, res) => {
   const pageSize = 5;
   const page = Number(req.query.pageNumber) || 1;
-  const keyword = req.query.keyword
-    ? {
-        title: {
-          $regex: req.query.keyword,
-          $options: "i", //case insensitve
-        },
-      }
-    : {};
+  const keyword =
+    req.query.keyword || ""
+      ? {
+          title: {
+            $regex: req.query.keyword,
+            $options: "i", //case insensitve
+          },
+        }
+      : {};
   const count = await Question.countDocuments({ ...keyword, isTaken: false });
   let questions = {};
   if (count === 0) {
@@ -23,12 +24,12 @@ const getFreeQuestions = asyncHandler(async (req, res) => {
       detail: { $regex: req.query.keyword, $options: "i" },
       isTaken: false,
     })
-      .populate("user")
+      .populate("user", ["-password"])
       .limit(pageSize)
       .skip(pageSize * (page - 1));
   } else {
     questions = await Question.find({ ...keyword, isTaken: false })
-      .populate("user")
+      .populate("user", ["-password"])
       .limit(pageSize)
       .skip(pageSize * (page - 1));
   }
@@ -56,7 +57,7 @@ const getQuestions = asyncHandler(async (req, res) => {
     : {};
   const count = await Question.countDocuments({ ...keyword });
   const questions = await Question.find({ ...keyword })
-    .populate("user")
+    .populate("user", ["-password"])
     .populate("takenBy", ["-password", "-isAdmin", "-isCustomer"])
     .limit(pageSize)
     .skip(pageSize * (page - 1));
@@ -89,7 +90,7 @@ const getQuestionsByUserId = asyncHandler(async (req, res) => {
     ...keyword,
     takenBy: req.params.userid,
   })
-    .populate("user")
+    .populate("user", ["-password"])
     .populate("takenBy", ["-password", "-isAdmin", "-isCustomer"])
     .limit(pageSize)
     .skip(pageSize * (page - 1));
@@ -123,7 +124,7 @@ const getQuestionsCreatedUserId = asyncHandler(async (req, res) => {
     ...keyword,
     user: req.params.userid,
   })
-    .populate("user")
+    .populate("user", ["-password"])
     .populate("takenBy", ["-password", "-isAdmin", "-isCustomer"])
     .limit(pageSize)
     .skip(pageSize * (page - 1));
@@ -252,32 +253,71 @@ const takeQuestion = asyncHandler(async (req, res) => {
 // @route   POST /api/questions/public
 // @access  Public
 const createPublicQuestion = asyncHandler(async (req, res) => {
-  const { name, email, title, detail } = req.body;
-  const user = await User.findOne({
-    email: email,
-  });
-
-  const question = new Question({
-    title: title,
-    detail: detail,
-  });
-
-  if (!user) {
-    const newUser = new User({
-      name: name,
-      email: email,
-      password: "123456",
-      isCustomer: true,
-      isAdmin: false,
-      isLawyer: false,
+  try {
+    const { name, email, title, detail, areas } = req.body;
+    const areas_mapped = areas.map((area) => {
+      return area.value;
     });
-    const createdUser = await newUser.save();
-    question.user = createdUser._id;
-  } else {
-    question.user = user._id;
+
+    const user = await User.findOne({
+      email: email,
+    });
+
+    const status = { status: "No Gestionado", type: "Abierto" };
+
+    const question = new Question({
+      title: title,
+      detail: detail,
+      areas: areas_mapped,
+      status: status,
+    });
+
+    if (!user) {
+      const newUser = new User({
+        name: name,
+        email: email,
+        password: "123456",
+        isCustomer: true,
+        isAdmin: false,
+        isLawyer: false,
+      });
+      const createdUser = await newUser.save();
+      question.user = createdUser._id;
+    } else {
+      question.user = user._id;
+    }
+    const createdQuestion = await question.save();
+    res.status(201).json(createdQuestion);
+  } catch (error) {
+    res.status(400);
+    throw new Error(`Question not created: ${error}`);
   }
-  const createdQuestion = await question.save();
-  res.status(201).json(createdQuestion);
+});
+
+// @desc    Create a question by auth user taking it
+// @route   PUT /api/questions/createdbyme
+// @access  Private/Admin or Private/Lawyer
+const createQuestionTakenByMe = asyncHandler(async (req, res) => {
+  try {
+    const { title, detail, areas, user } = req.body;
+    const question = new Question({
+      title: title,
+      detail: detail,
+      areas: areas,
+      user: user,
+      takenBy: req.user._id,
+      isTaken: true,
+      takenAt: Date.now(),
+    });
+
+    const createdQuestion = await question.save();
+    if (createdQuestion) {
+      res.status(201).json(createdQuestion);
+    }
+  } catch (error) {
+    res.status(400);
+    throw new Error(`Question not taken: ${error}`);
+  }
 });
 
 exports.getQuestionById = getQuestionById;
@@ -291,3 +331,4 @@ exports.takeQuestion = takeQuestion;
 exports.getQuestionsByUserId = getQuestionsByUserId;
 exports.createPublicQuestion = createPublicQuestion;
 exports.getQuestionsCreatedUserId = getQuestionsCreatedUserId;
+exports.createQuestionTakenByMe = createQuestionTakenByMe;

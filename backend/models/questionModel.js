@@ -73,6 +73,28 @@ const questionSchema = mongoose.Schema(
     takenAt: { type: Date },
     paidAt: { type: Date },
     closedAt: { type: Date },
+    status: {
+      status: {
+        type: String,
+        required: true,
+        enum: [
+          "No Gestionado",
+          "Cotización",
+          "Negociación",
+          "Abonado",
+          "Arranque de Proceso",
+          "En Proceso",
+          "Caso Cerrado Ganado",
+          "Caso Cerrado Perdido",
+          "Cliente Desistió",
+        ],
+      },
+      type: {
+        type: String,
+        required: true,
+        enum: ["Abierto", "Cerrado", "En Espera"],
+      },
+    },
   },
   {
     timestamps: true,

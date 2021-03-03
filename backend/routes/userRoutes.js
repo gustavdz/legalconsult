@@ -9,10 +9,12 @@ const {
   updateUserProfile,
   getUserById,
   updateUser,
+  getCustomers,
 } = require("../controllers/userController");
-const { protect, admin } = require("../middleware/authMiddleware");
+const { protect, admin, adminLawyer } = require("../middleware/authMiddleware");
 
 router.route("/").post(registerUser).get(protect, admin, getUsers);
+router.route("/customers").get(protect, adminLawyer, getCustomers);
 router.post("/login", authUser);
 router
   .route("/profile")

@@ -24,6 +24,7 @@ const SearchBox = ({ history }) => {
             name="q"
             onChange={(e) => setKeyword(e.target.value)}
             placeholder="Search Questions..."
+            className="mb-0"
           />
         </InputGroup>
       </Form.Group>

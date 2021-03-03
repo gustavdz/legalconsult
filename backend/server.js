@@ -5,7 +5,7 @@ const colors = require("colors");
 const morgan = require("morgan");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const connectDB = require("./config/db");
-const products = require("./data/products");
+// const products = require("./data/products");
 
 const http = require("http");
 const socketIo = require("socket.io");

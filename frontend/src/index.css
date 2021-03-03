@@ -1,23 +1,17 @@
-/* main {
-  min-height: calc(100vh - 180px);
-}
-h3 {
-  padding: 1rem 0;
-}
-h2 {
-  font-size: 1.4rem;
-  padding: 0.5rem 0;
-}
-h1 {
-  font-size: 1.8rem;
-  padding: 1rem 0;
-} */
 .rating span {
   margin: 0.1rem;
 }
-/* .form-control {
-  padding: 0.75rem 1rem;
-} */
+
+.form-control {
+  margin-bottom: 10px;
+}
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.word-wrap {
+  word-wrap: break-word;
+}
 
 .chatbox {
   max-height: 50vh;
@@ -26,36 +20,44 @@ h1 {
   padding: 20px;
 }
 
+.css-1wa3eu0-placeholder {
+  font: 400 13.3333px Arial;
+  font-size: 16px;
+  color: #66799e !important;
+}
+
 .css-yk16xz-control {
+  font: 400 13.3333px Arial;
+  font-size: 16px;
   width: 100% !important;
   min-height: calc(1.5em + 1.5rem) !important;
   font-size: 0.875rem !important;
   font-weight: 400 !important;
   line-height: 1.5 !important;
-  color: #55595c !important;
-  background-color: #f7f7f9 !important;
+  color: #66799e !important;
   background-clip: padding-box !important;
-  border: 0 solid #ced4da !important;
-  border-radius: 0 !important;
+  border: 1 solid rgb(102, 121, 158) !important;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
 }
 
+.css-1pahdxg-control:focus {
+  border: 1 solid #566190 !important;
+}
+
 .css-1pahdxg-control {
+  font-family: Arial;
+  font-size: 16px;
   width: 100% !important;
   min-height: calc(1.5em + 1.5rem) !important;
   font-size: 0.875rem !important;
   font-weight: 400 !important;
   line-height: 1.5 !important;
-  color: #55595c !important;
-  background-color: #f7f7f9 !important;
+  color: #66799e !important;
   background-clip: padding-box !important;
-  border: 0 solid #ced4da !important;
-  border-radius: 0 !important;
+  border: 1 solid !important;
+  border-color: #566190 !important;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
   box-shadow: 0 #ced4da !important;
-
-  border-color: #ced4da !important;
-
   box-shadow: 0 0 0 3px #c6c6c6 !important;
   box-sizing: border-box;
 }
@@ -63,81 +65,3 @@ h1 {
 .css-1n7v3ny-option {
   background-color: rgba(0, 0, 0, 0.075) !important;
 }
-
-/* #body-row {
-  margin-left: 0;
-  margin-right: 0;
-}
-#sidebar-container {
-  min-height: calc(100vh - 154px);
-  background-color: #333;
-  padding: 0;
-}
-*/
-/* Sidebar sizes when expanded and expanded */
-/* .sidebar-expanded {
-  width: 230px;
-}
-.sidebar-collapsed {
-  width: 60px;
-} */
-
-/* Menu item*/
-/* #sidebar-container .list-group a {
-  height: 50px;
-  color: white;
-} */
-
-/* Submenu item*/
-/* #sidebar-container .list-group .sidebar-submenu a {
-  height: 45px;
-  padding-left: 30px;
-}
-
-.sidebar-submenu {
-  font-size: 0.9rem;
-} */
-
-/* Separators */
-/* .sidebar-separator-title {
-  background-color: #333;
-  height: 35px;
-}
-.sidebar-separator {
-  background-color: #333;
-  height: 25px;
-}
-.logo-separator {
-  background-color: #333;
-  height: 60px;
-} */
-
-/* Closed submenu icon */
-/* #sidebar-container
-  .list-group
-  .list-group-item[aria-expanded="false"]
-  .submenu-icon::after {
-  content: " \f0d7";
-  font-family: "Font Awesome 5 Free";
-  display: inline;
-  text-align: right;
-  padding-left: 10px;
-  font-weight: 900;
-}*/
-/* Opened submenu icon */
-/*#sidebar-container
-  .list-group
-  .list-group-item[aria-expanded="true"]
-  .submenu-icon::after {
-  content: " \f0da";
-  font-family: "Font Awesome 5 Free";
-  display: inline;
-  text-align: right;
-  padding-left: 10px;
-  font-weight: 900;
-}
-
-.sidebar-white-text {
-  color: white;
-  cursor: pointer;
-} */

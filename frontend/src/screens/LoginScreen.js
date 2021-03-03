@@ -77,6 +77,7 @@ const LoginScreen = ({ location, history }) => {
                         <FontAwesomeIcon icon={faEnvelope} />
                       </InputGroup.Text>
                       <Form.Control
+                        className="mb-0"
                         autoFocus
                         required
                         type="email"
@@ -97,6 +98,7 @@ const LoginScreen = ({ location, history }) => {
                       </InputGroup.Text>
                       <Form.Control
                         required
+                        className="mb-0"
                         type="password"
                         placeholder="Password"
                         value={password}

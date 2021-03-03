@@ -49,7 +49,7 @@ const adminLawyer = (req, res, next) => {
     next();
   } else {
     res.status(401);
-    throw new Error("Not authorized as an admin");
+    throw new Error("Not authorized as an admin or lawyer");
   }
 };
 

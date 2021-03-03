@@ -107,7 +107,11 @@ const QuestionListScreen = ({ history, match }) => {
               {questions.map((question) => (
                 <tr key={question._id}>
                   <td>{question.title}</td>
-                  <td>{question.detail}</td>
+                  <td>
+                    {question.detail.length > 50
+                      ? question.detail.substring(0, 50) + "..."
+                      : question.detail}
+                  </td>
                   <td>
                     {question.areas.length > 0
                       ? question.areas.map((area) => {

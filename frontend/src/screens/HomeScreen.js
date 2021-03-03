@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Col, Row } from "react-bootstrap";
+import { Row, Col } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
 import Question from "../components/Question";
 import Message from "../components/Message";
@@ -8,13 +8,13 @@ import Paginate from "../components/Paginate";
 import Loader from "../components/Loader";
 import Meta from "../components/Meta";
 import { listQuestions } from "../actions/questionActions";
-import io from "socket.io-client";
+//import io from "socket.io-client";
 
 const HomeScreen = ({ match, history }) => {
   const keyword = match.params.keyword;
   const pageNumber = match.params.pageNumber || 1;
   const [reload, setReload] = useState(false);
-  const [response, setResponse] = useState("");
+  //const [response, setResponse] = useState("");
   //const ENDPOINT = "http://127.0.0.1:4001";
 
   const dispatch = useDispatch();
@@ -25,12 +25,13 @@ const HomeScreen = ({ match, history }) => {
   const questionList = useSelector((state) => state.questionList);
   const { loading, error, questions, page, pages } = questionList;
 
-  useEffect(() => {
-    const socket = io();
-    socket.on("identification", (data) => {
-      setResponse(data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   const socket = io();
+  //   socket.on("identification", (data) => {
+  //     setResponse(data);
+  //   });
+  // }, []);
+
   useEffect(() => {
     if (!userInfo) {
       history.push("/login");
@@ -45,10 +46,10 @@ const HomeScreen = ({ match, history }) => {
       <Meta />
       {keyword && (
         <Link to="/home" className="btn btn-light">
-          Go Back
+          Regresar
         </Link>
       )}
-      <h1>Lastest Questions - {response}</h1>
+      <h1>Últimas preguntas</h1>
       {loading ? (
         <Loader />
       ) : error ? (

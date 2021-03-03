@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken");
 const User = require("../models/userModel");
+const Question = require("../models/questionModel");
 
 // @desc    Auth user & get token
 // @route   POST /api/users/login
@@ -125,9 +126,35 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route   GET /api/users
 // @access  Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
-  const users = await User.find({});
+  const users = await User.find({}).select("-password");
 
   res.json(users);
+});
+
+// @desc    get my customers
+// @route   GET /api/users/customers
+// @access  Private/AdminLawyer
+const getCustomers = asyncHandler(async (req, res) => {
+  const users = await Question.find(
+    {
+      takenBy: req.user._id,
+    },
+    { user: 1, _id: 0 }
+  ).populate("user", ["-password"]);
+
+  const usersFiltered = users
+    .map((user) => user.user)
+    .filter(
+      (user, index, self) => self.findIndex((u) => u._id === user._id) === index
+    );
+  const userQuestionsCount = await Promise.all(
+    usersFiltered.map(async (user) => {
+      const myCount = await Question.countDocuments({ user: user._id });
+      user.questionCount = myCount;
+      return user;
+    })
+  );
+  res.json(userQuestionsCount);
 });
 
 // @desc    delete user
@@ -194,3 +221,4 @@ exports.getUsers = getUsers;
 exports.deleteUser = deleteUser;
 exports.getUserById = getUserById;
 exports.updateUser = updateUser;
+exports.getCustomers = getCustomers;
